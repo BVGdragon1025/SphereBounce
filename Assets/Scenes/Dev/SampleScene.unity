@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ccc61e11f978646859b7645d7fc66c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 5
+  _bounceForce: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,16 +571,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4599883401963140694, guid: 178e452f657a9b54694e5417da923d3d,
-        type: 3}
-      propertyPath: _downForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4599883401963140694, guid: 178e452f657a9b54694e5417da923d3d,
-        type: 3}
-      propertyPath: _bounceForce
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8356238029773902873, guid: 178e452f657a9b54694e5417da923d3d,
         type: 3}

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4599883401963140694}
   m_Layer: 0
   m_Name: BouncingSphere
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,4 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b658c37eb2dea349a5a786bc60c4f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bouceForce: 5
+  _downForce: 10
+  isInAir: 0
+  sphereRb: {fileID: 0}
