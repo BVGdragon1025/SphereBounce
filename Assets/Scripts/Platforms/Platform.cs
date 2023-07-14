@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformController : MonoBehaviour
+public abstract class Platform : MonoBehaviour
 {
     [SerializeField]
-    private float _bounceForce;
+    protected float bounceForce;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             SphereController.Instance.sphereRb.velocity = Vector3.zero;
-            SphereController.Instance.sphereRb.AddForce(Vector3.up *  _bounceForce, ForceMode.Impulse);
+            BounceSphere();
             SphereController.Instance.isInAir = false;
         }
     }
+
+    public abstract void BounceSphere();
 
 }
