@@ -17,6 +17,12 @@ public abstract class Platform : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            SphereController.Instance.isInAir = true;
+    }
+
     public abstract void BounceSphere();
 
 }

@@ -39,11 +39,4 @@ public class SphereController : MonoBehaviour
         }
     }
 
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Platform"))
-            isInAir = true;
-    }
-
 }
