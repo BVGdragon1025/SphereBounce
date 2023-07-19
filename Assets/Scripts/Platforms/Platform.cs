@@ -6,6 +6,13 @@ public abstract class Platform : MonoBehaviour
 {
     [SerializeField]
     protected float bounceForce;
+    [SerializeField]
+    protected float platformSpeed;
+
+    private void Update()
+    {
+        gameObject.transform.Translate(platformSpeed * Time.deltaTime * Vector3.left);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
