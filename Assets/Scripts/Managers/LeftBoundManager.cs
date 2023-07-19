@@ -6,20 +6,21 @@ public class LeftBoundManager : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Vector3 spawnLocation = new(PlatformManager.Instance.transform.position.x, PlatformManager.Instance.transform.position.y, PlatformManager.Instance.transform.position.z);
-
 
         Debug.Log($"Current collision with LeftBound: {other.gameObject.tag}");
 
         if (other.gameObject.CompareTag("Platform"))
         {
             GameObject platform = PlatformManager.Instance.GetPooledObject();
-            Debug.Log($"Platform from pool status: {platform}");
+            //Debug.Log($"Platform from pool status: {platform}");
 
             if (platform != null)
             {
-                platform.transform.position = spawnLocation;
+                Debug.Log($"Platform spawn location before 1: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
+                platform.transform.position = PlatformManager.Instance.transform.position;
+                Debug.Log($"Platform spawn location before 2: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
                 platform.SetActive(true);
+                Debug.Log($"Platform spawn location after: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
                 
             }
 
