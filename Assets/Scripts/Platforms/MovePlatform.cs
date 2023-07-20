@@ -10,6 +10,7 @@ public class MovePlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(_platformSpeed * Time.deltaTime * Vector3.left);
+        if (!SphereController.Instance.isDead)
+            transform.Translate(_platformSpeed * Time.deltaTime * Vector3.left);
     }
 }

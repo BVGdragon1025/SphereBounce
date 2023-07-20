@@ -7,7 +7,7 @@ public class LeftBoundManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        Debug.Log($"Current collision with LeftBound: {other.gameObject.tag}");
+        //Debug.Log($"Current collision with LeftBound: {other.gameObject.tag}");
 
         if (other.gameObject.CompareTag("Platform"))
         {
@@ -16,11 +16,10 @@ public class LeftBoundManager : MonoBehaviour
 
             if (platform != null)
             {
-                Debug.Log($"Platform spawn location before 1: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
+                //Debug.Log($"Platform spawn location before 1: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
                 platform.transform.position = PlatformManager.Instance.transform.position;
-                Debug.Log($"Platform spawn location before 2: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
                 platform.SetActive(true);
-                Debug.Log($"Platform spawn location after: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
+                //Debug.Log($"Platform spawn location after: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
                 
             }
 

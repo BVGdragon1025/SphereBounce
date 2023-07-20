@@ -25,9 +25,11 @@ public abstract class Platform : MonoBehaviour
 
     public abstract void BounceSphere();
 
+    /*
     private void OnEnable()
     {
         Debug.Log($"Platform name: {name}, platform position: {transform.position}");
     }
+    */
 
 }
