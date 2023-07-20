@@ -12,6 +12,7 @@ public abstract class Platform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             SphereController.Instance.sphereRb.velocity = Vector3.zero;
+            GameManager.Instance.AddScore();
             BounceSphere();
             SphereController.Instance.isInAir = false;
         }
