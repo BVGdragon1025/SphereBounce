@@ -11,6 +11,7 @@ public class SphereController : MonoBehaviour
     public static SphereController Instance { get; set; }
     [HideInInspector]
     public Rigidbody sphereRb;
+    public bool isDead;
 
     private void Awake()
     {
@@ -22,6 +23,8 @@ public class SphereController : MonoBehaviour
         {
             Instance = this;
         }
+
+        isDead = false;
         
     }
 
@@ -33,10 +36,17 @@ public class SphereController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isInAir)
+        if (Input.GetMouseButtonDown(0) && isInAir && !isDead)
         {
             sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
         }
+    }
+
+    public void MarkAsDead()
+    {
+        isDead = true;
+        Debug.Log("Player is dead!");
+        Time.timeScale = 0;
     }
 
 }

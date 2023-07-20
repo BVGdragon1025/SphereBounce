@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
+    [Header("Normal Platform Section")]
     [SerializeField]
     private GameObject _normalPlatformPrefab;
+    [SerializeField]
+    private int _amountToPool;
+    [SerializeField]
+    private float _spaceBetweenPlatforms;
 
     public static PlatformManager Instance;
+    public List<GameObject> normalPlatformsPool;
 
     private void Awake()
     {
         if(Instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -25,12 +31,29 @@ public class PlatformManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        normalPlatformsPool = new List<GameObject>();
+        GameObject temp;
+
+        for(int i = 0; i <= _amountToPool; i++)
+        {
+            temp = Instantiate(_normalPlatformPrefab);
+            temp.SetActive(false);
+            normalPlatformsPool.Add(temp);
+
+        }
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject GetPooledObject()
     {
-        
+        for(int i = 0; i <= _amountToPool; i++)
+        {
+            if (!normalPlatformsPool[i].activeInHierarchy)
+            {
+                return normalPlatformsPool[i];
+            }
+        }
+        return null;
     }
+
 }
