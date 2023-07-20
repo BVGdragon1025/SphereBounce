@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LeftBoundManager : MonoBehaviour
 {
+    [SerializeField]
+    private int _platformCount;
+
     private void OnTriggerEnter(Collider other)
     {
 
@@ -16,9 +19,9 @@ public class LeftBoundManager : MonoBehaviour
 
             if (platform != null)
             {
+                _platformCount++;
                 //Debug.Log($"Platform spawn location before 1: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
-                platform.transform.position = PlatformManager.Instance.transform.position;
-                platform.SetActive(true);
+                SpawnPlatform(platform, _platformCount);
                 //Debug.Log($"Platform spawn location after: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
                 
             }
@@ -26,4 +29,18 @@ public class LeftBoundManager : MonoBehaviour
             other.gameObject.SetActive(false);
         }
     }
+
+    private void SpawnPlatform(GameObject platform, int platformsCount)
+    {
+        if(platformsCount == 1 || (platformsCount % 5 == 0))
+        {
+            platform.transform.position = new Vector3(PlatformManager.Instance.SpaceBetweenPlatforms * 3, PlatformManager.Instance.transform.position.y, PlatformManager.Instance.transform.position.z);
+        }
+        else
+        {
+            platform.transform.position = PlatformManager.Instance.transform.position;
+        }
+        platform.SetActive(true);
+    }
+
 }

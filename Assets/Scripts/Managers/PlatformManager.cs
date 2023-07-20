@@ -12,6 +12,7 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private float _spaceBetweenPlatforms;
 
+    public float SpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
     public static PlatformManager Instance;
     public List<GameObject> normalPlatformsPool;
 

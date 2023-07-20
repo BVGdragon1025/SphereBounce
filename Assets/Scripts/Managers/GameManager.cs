@@ -7,8 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI _scoreText;
-    [SerializeField]
-    private int _currentScore;
+    private int _currentScore = -1;
 
     public static GameManager Instance;
 
