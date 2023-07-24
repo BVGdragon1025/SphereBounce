@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI _scoreText;
-    private int _currentScore = -1;
+    private int _currentScore = 0;
+
+    [SerializeField]
+    private TextMeshProUGUI _comboText;
+    private int _currentCombo = 0;
+    public int CurrentCombo { get { return _currentCombo; } set { _currentCombo = value; } }
 
     public static GameManager Instance;
 
@@ -25,13 +30,20 @@ public class GameManager : MonoBehaviour
 
     public void AddScore()
     {
-        _currentScore++;
+        _currentScore += _currentCombo;
         UpdateScore(_currentScore);
     }
 
     private void UpdateScore(int score)
     {
         _scoreText.text = $"Score: {score}";
+        UpdateCombo();
 
     }
+
+    private void UpdateCombo()
+    {
+        _comboText.text = $"Combo: {_currentCombo}";
+    }
+
 }
