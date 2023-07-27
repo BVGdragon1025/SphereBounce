@@ -10,20 +10,14 @@ public class LeftBoundManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        //Debug.Log($"Current collision with LeftBound: {other.gameObject.tag}");
-
-        if (other.gameObject.CompareTag("Platform"))
+        if (other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("StartingPlatform"))
         {
             GameObject platform = PlatformManager.Instance.GetPooledObject();
-            //Debug.Log($"Platform from pool status: {platform}");
 
             if (platform != null)
             {
                 _platformCount++;
-                //Debug.Log($"Platform spawn location before 1: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
                 SpawnPlatform(platform, _platformCount);
-                //Debug.Log($"Platform spawn location after: {platform.transform.position}, platform spawn: {platform.transform.localPosition}");
-                
             }
 
             other.gameObject.SetActive(false);
@@ -34,7 +28,7 @@ public class LeftBoundManager : MonoBehaviour
     {
         if(platformsCount == 1 || (platformsCount % 5 == 0))
         {
-            platform.transform.position = new Vector3(PlatformManager.Instance.SpaceBetweenPlatforms * 3, PlatformManager.Instance.transform.position.y, PlatformManager.Instance.transform.position.z);
+            platform.transform.position = new Vector3(PlatformManager.Instance.GetSpaceBetweenPlatforms * 3, PlatformManager.Instance.transform.position.y, PlatformManager.Instance.transform.position.z);
         }
         else
         {

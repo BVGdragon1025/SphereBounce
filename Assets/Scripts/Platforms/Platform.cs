@@ -28,6 +28,12 @@ public abstract class Platform : MonoBehaviour
             SphereController.Instance.isInAir = true;
     }
 
+    private void Update()
+    {
+        if (!SphereController.Instance.isDead)
+            transform.Translate(PlatformManager.Instance.GetPlatformSpeed * Time.deltaTime * Vector3.left);
+    }
+
     public abstract void BounceSphere();
 
 }
