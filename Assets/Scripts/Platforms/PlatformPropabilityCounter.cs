@@ -34,7 +34,35 @@ public class PlatformPropabilityCounter : MonoBehaviour
 
         Debug.Log($"Random number is: {randomFloat}");
 
-        if(randomFloat >= (1 - _normalPlatformChance))
+        if(0 < randomFloat && randomFloat <= (1 -_normalPlatformChance))
+        {
+            Debug.Log("Now spawning: Normal Platform");
+            _normalPlatformChance = Mathf.Clamp(_normalPlatformChance - _propabilityDecrease, 0.1f, 1f);
+            _doublePlatformChance = Mathf.Clamp(_doublePlatformChance + (_propabilityDecrease / 2), 0f, 1f);
+            _longPlatformChance = Mathf.Clamp(_longPlatformChance + (_propabilityDecrease / 2), 0f, 1f);
+            return 0;
+        }
+
+        if((1 - _normalPlatformChance) < randomFloat && randomFloat <= (1 - _longPlatformChance))
+        {
+            Debug.Log("Now spawning: Long Platform");
+            _longPlatformChance = Mathf.Clamp(_longPlatformChance - _propabilityDecrease, 0.1f, 1f);
+            _normalPlatformChance = Mathf.Clamp(_normalPlatformChance + (_propabilityDecrease / 2) / 2, 0f, 1f);
+            _doublePlatformChance = Mathf.Clamp(_doublePlatformChance + (_propabilityDecrease / 2), 0f, 1f);
+            return 1;
+        }
+
+        if((1 - _longPlatformChance) < randomFloat && randomFloat <= 1 )
+        {
+            Debug.Log("Now spawning: Double Platform");
+            _doublePlatformChance = Mathf.Clamp(_doublePlatformChance - _propabilityDecrease, 0.1f, 1f);
+            _normalPlatformChance = Mathf.Clamp(_normalPlatformChance + (_propabilityDecrease / 2), 0f, 1f);
+            _longPlatformChance = Mathf.Clamp(_longPlatformChance + (_propabilityDecrease / 2), 0f, 1f);
+            return 2;
+        }
+
+        /*
+         * if(randomFloat >= (1 - _normalPlatformChance))
         {
             Debug.Log("Now spawning: Normal Platforms");
             return 0;
@@ -51,8 +79,10 @@ public class PlatformPropabilityCounter : MonoBehaviour
             Debug.Log("Now spawning: Long Platforms");
             return 2;
         }
-
+        */
+        
         return -1;
         
     }
+
 }

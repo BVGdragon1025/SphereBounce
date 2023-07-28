@@ -63,11 +63,13 @@ public class PlatformManager : MonoBehaviour
 
     public GameObject GetPooledObject()
     {
+        var winningPool = GetWinnerPool();
+
         for(int i = 0; i <= _maxAmountToPool; i++)
         {
-            if (!GetWinnerPool()[i].activeInHierarchy)
+            if (!winningPool[i].activeInHierarchy)
             {
-                return GetWinnerPool()[i];
+                return winningPool[i];
             }
         }
         return null;
