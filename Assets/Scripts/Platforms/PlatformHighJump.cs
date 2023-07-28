@@ -2,15 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformNormal : Platform
+public class PlatformHighJump : Platform
 {
     public override void BounceSphere()
     {
         SphereController.Instance.sphereRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
-        if (!CompareTag("StartingPlatform"))
-        {
-            GameManager.Instance.CurrentCombo += 1;
-        }
-        
+        GameManager.Instance.CurrentCombo += 2;
     }
 }

@@ -2,18 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlatformManager))]
 public class PlatformManager : MonoBehaviour
 {
-    [Header("Normal Platform Section")]
+    [Header("Platform Prefabs Section")]
     [SerializeField]
     private GameObject _normalPlatformPrefab;
     [SerializeField]
-    private int _amountToPool;
+    private GameObject _longPlatformPrefab;
+    [SerializeField]
+    private GameObject _doublePlatformPrefab;
+
+    [Header("Platform Control Section")]
+    [SerializeField]
+    private int _maxAmountToPool;
     [SerializeField]
     private float _spaceBetweenPlatforms;
+    [SerializeField]
+    private float _platformSpeed;
 
+    public float GetPlatformSpeed { get { return _platformSpeed; } }
+    public float SetPlatformSpeed { set { _platformSpeed = value; } }
+    public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
     public static PlatformManager Instance;
+
+    [Header("Platform Pools Section")]
     public List<GameObject> normalPlatformsPool;
+    public List<GameObject> longPlatformsPool;
+    public List<GameObject> doublePlatformsPool;
+
+    //Other variables
+    private PlatformPropabilityCounter _propabilityComponent;
 
     private void Awake()
     {
@@ -26,34 +45,61 @@ public class PlatformManager : MonoBehaviour
             Instance = this;
         }
         
+        _propabilityComponent = GetComponent<PlatformPropabilityCounter>();
+
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         normalPlatformsPool = new List<GameObject>();
-        GameObject temp;
+        longPlatformsPool = new List<GameObject>();
+        doublePlatformsPool = new List<GameObject>();
 
-        for(int i = 0; i <= _amountToPool; i++)
-        {
-            temp = Instantiate(_normalPlatformPrefab);
-            temp.SetActive(false);
-            normalPlatformsPool.Add(temp);
-
-        }
+        SetObjectPool(_normalPlatformPrefab, normalPlatformsPool);
+        SetObjectPool(_longPlatformPrefab, longPlatformsPool);
+        SetObjectPool(_doublePlatformPrefab, doublePlatformsPool);
 
     }
 
     public GameObject GetPooledObject()
     {
-        for(int i = 0; i <= _amountToPool; i++)
+        var winningPool = GetWinnerPool();
+
+        for(int i = 0; i <= _maxAmountToPool; i++)
         {
-            if (!normalPlatformsPool[i].activeInHierarchy)
+            if (!winningPool[i].activeInHierarchy)
             {
-                return normalPlatformsPool[i];
+                return winningPool[i];
             }
         }
         return null;
+    }
+
+    private void SetObjectPool(GameObject objectPrefab, List<GameObject> objectPool)
+    {
+        GameObject tempObject;
+
+        for(int i = 0; i < _maxAmountToPool; i++)
+        {
+            tempObject = Instantiate(objectPrefab);
+            tempObject.SetActive(false);
+            objectPool.Add(tempObject);
+        }
+    }
+
+    private List<GameObject> GetWinnerPool()
+    {
+        switch (_propabilityComponent.CheckPropability())
+        {
+            case 0:
+                return normalPlatformsPool;
+            case 1:
+                return longPlatformsPool;
+            case 2:
+                return doublePlatformsPool;
+            default:
+                return null;
+        }
     }
 
 }

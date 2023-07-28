@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8113135284856351942}
   - component: {fileID: 8113135284856351943}
+  - component: {fileID: 34259149}
   m_Layer: 0
   m_Name: PlatformManager
   m_TagString: Untagged
@@ -46,6 +47,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _normalPlatformPrefab: {fileID: 7011426531578910211, guid: 32a5abec09eff5642affda2d317b74b3,
     type: 3}
-  _amountToPool: 6
+  _longPlatformPrefab: {fileID: 6282009138094873969, guid: 3f6456fdb1340e7469f9f5810ffe6675,
+    type: 3}
+  _doublePlatformPrefab: {fileID: 4158123932094786310, guid: 73ff1854f0f8476469f95f8effc7d28b,
+    type: 3}
+  _maxAmountToPool: 6
   _spaceBetweenPlatforms: 2.5
+  _platformSpeed: 2.5
   normalPlatformsPool: []
+  longPlatformsPool: []
+  doublePlatformsPool: []
+--- !u!114 &34259149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8113135284856351940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e927427ec29a94299470e7b0454e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normalPlatformChance: 0.5
+  _longPlatformChance: 0.25
+  _doublePlatformChance: 0.3
+  _propabilityDecrease: 0.1

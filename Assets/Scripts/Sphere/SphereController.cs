@@ -28,7 +28,6 @@ public class SphereController : MonoBehaviour
         
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         sphereRb = GetComponent<Rigidbody>();

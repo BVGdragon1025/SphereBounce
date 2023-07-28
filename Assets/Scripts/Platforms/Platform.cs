@@ -13,6 +13,11 @@ public abstract class Platform : MonoBehaviour
         {
             SphereController.Instance.sphereRb.velocity = Vector3.zero;
             BounceSphere();
+            if (!CompareTag("StartingPlatform"))
+            {
+                GameManager.Instance.AddScore();
+            }
+            
             SphereController.Instance.isInAir = false;
         }
     }
@@ -23,13 +28,12 @@ public abstract class Platform : MonoBehaviour
             SphereController.Instance.isInAir = true;
     }
 
-    public abstract void BounceSphere();
-
-    /*
-    private void OnEnable()
+    private void Update()
     {
-        Debug.Log($"Platform name: {name}, platform position: {transform.position}");
+        if (!SphereController.Instance.isDead)
+            transform.Translate(PlatformManager.Instance.GetPlatformSpeed * Time.deltaTime * Vector3.left);
     }
-    */
+
+    public abstract void BounceSphere();
 
 }
