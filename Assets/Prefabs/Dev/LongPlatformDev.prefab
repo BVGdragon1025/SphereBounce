@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 2263334495707437870}
   m_Layer: 0
   m_Name: ComboBreakerPlatformDev (1)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 1848380837941187729}
   m_Layer: 0
   m_Name: NormalPlatformDev
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 8290259242205899545}
   m_Layer: 0
   m_Name: ComboBreakerPlatformDev (2)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -729,7 +729,7 @@ GameObject:
   - component: {fileID: 4776654670849278204}
   m_Layer: 0
   m_Name: ComboBreakerPlatformDev
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

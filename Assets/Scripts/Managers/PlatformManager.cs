@@ -24,6 +24,7 @@ public class PlatformManager : MonoBehaviour
     public float GetPlatformSpeed { get { return _platformSpeed; } }
     public float SetPlatformSpeed { set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
+    public int MaxPoolCount { get { return _maxAmountToPool; }}
     public static PlatformManager Instance;
 
     [Header("Platform Pools Section")]
@@ -61,7 +62,7 @@ public class PlatformManager : MonoBehaviour
 
     }
 
-    public GameObject GetPooledObject()
+    public GameObject GetPooledObject(int poolLimit)
     {
         var winningPool = GetWinnerPool();
 

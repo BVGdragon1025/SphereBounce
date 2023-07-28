@@ -676,6 +676,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1617777272}
     m_Modifications:
+    - target: {fileID: 3507608531617770283, guid: 3f6456fdb1340e7469f9f5810ffe6675,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 3919179851267630228, guid: 3f6456fdb1340e7469f9f5810ffe6675,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     - target: {fileID: 6282009138094873969, guid: 3f6456fdb1340e7469f9f5810ffe6675,
         type: 3}
       propertyPath: m_Name
@@ -740,6 +750,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6686041148083378972, guid: 3f6456fdb1340e7469f9f5810ffe6675,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 7894647173912850681, guid: 3f6456fdb1340e7469f9f5810ffe6675,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f6456fdb1340e7469f9f5810ffe6675, type: 3}
@@ -1355,6 +1375,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1617777272}
     m_Modifications:
+    - target: {fileID: 3553577615252043693, guid: 73ff1854f0f8476469f95f8effc7d28b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     - target: {fileID: 4158123932094786305, guid: 73ff1854f0f8476469f95f8effc7d28b,
         type: 3}
       propertyPath: m_RootOrder
@@ -1414,6 +1439,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DoublePlatformDev
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158123932829369116, guid: 73ff1854f0f8476469f95f8effc7d28b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73ff1854f0f8476469f95f8effc7d28b, type: 3}

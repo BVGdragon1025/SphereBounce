@@ -70,6 +70,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _normalPlatformChance: 0.5
-  _longPlatformChance: 0.25
+  _longPlatformChance: 0.2
   _doublePlatformChance: 0.3
   _propabilityDecrease: 0.1
