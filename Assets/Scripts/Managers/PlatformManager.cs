@@ -62,7 +62,23 @@ public class PlatformManager : MonoBehaviour
 
     }
 
-    public GameObject GetPooledObject(int poolLimit)
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log($"{other.tag}");
+
+        if (other.CompareTag("Platform") || other.CompareTag("DoublePlatform"))
+        {
+            GameObject platform = GetPooledObject();
+
+            if(platform != null)
+            {
+                Debug.Log("Platform is not null");
+                SpawnPlatform(platform, other.gameObject);
+            }
+        }
+    }
+
+    public GameObject GetPooledObject()
     {
         var winningPool = GetWinnerPool();
 
@@ -101,6 +117,30 @@ public class PlatformManager : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    private void SpawnPlatform(GameObject platform, GameObject otherPlatform)
+    {
+
+        Vector3 otherObjectPos = otherPlatform.transform.position;
+        Debug.Log($"{otherObjectPos}");
+
+        switch (otherPlatform.tag)
+        {
+            case "DoublePlatform":
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 2), otherObjectPos.y, otherObjectPos.z);
+                break;
+            case "Platform":
+                platform.transform.position = new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, otherObjectPos.y, otherObjectPos.z);
+                break;
+            default:
+                Debug.Log("Non-platform object has exited the collider.");
+                break;
+        }
+
+        platform.SetActive(true);
+
+        Debug.Log($"{otherObjectPos}");
     }
 
 }
