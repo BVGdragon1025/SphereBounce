@@ -31,27 +31,33 @@ public class PlatformPropabilityCounter : MonoBehaviour
         if(0 < randomFloat && randomFloat <= (1 -_normalPlatformChance))
         {
             Debug.Log("Now spawning: Normal Platform");
+            /*
             _normalPlatformChance = Mathf.Clamp(_normalPlatformChance - _propabilityDecrease, 0.1f, 1.0f);
             _doublePlatformChance = Mathf.Clamp(_doublePlatformChance + (_propabilityDecrease / 2), 0f, 1.0f);
             _longPlatformChance = Mathf.Clamp(_longPlatformChance + (_propabilityDecrease / 2), 0f, 1.0f);
+            */
             return 0;
         }
 
         if((1 - _normalPlatformChance) < randomFloat && randomFloat <= (1 - _longPlatformChance))
         {
             Debug.Log("Now spawning: Long Platform");
+            /*
             _longPlatformChance = Mathf.Clamp(_longPlatformChance - _propabilityDecrease, 0.1f, 1.0f);
             _normalPlatformChance = Mathf.Clamp(_normalPlatformChance + (_propabilityDecrease / 2), 0f, 1.0f);
             _doublePlatformChance = Mathf.Clamp(_doublePlatformChance + (_propabilityDecrease / 2), 0f, 1.0f);
+            */
             return 1;
         }
 
         if((1 - _longPlatformChance) < randomFloat && randomFloat <= 1 )
         {
             Debug.Log("Now spawning: Double Platform");
+            /*
             _doublePlatformChance = Mathf.Clamp(_doublePlatformChance - _propabilityDecrease, 0.1f, 1.0f);
             _normalPlatformChance = Mathf.Clamp(_normalPlatformChance + (_propabilityDecrease / 2), 0f, 1.0f);
             _longPlatformChance = Mathf.Clamp(_longPlatformChance + (_propabilityDecrease / 2), 0f, 1.0f);
+            */
             return 2;
         }
         

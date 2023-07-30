@@ -21,8 +21,7 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private float _platformSpeed;
 
-    public float GetPlatformSpeed { get { return _platformSpeed; } }
-    public float SetPlatformSpeed { set { _platformSpeed = value; } }
+    public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
     public int MaxPoolCount { get { return _maxAmountToPool; }}
     public static PlatformManager Instance;
@@ -34,6 +33,8 @@ public class PlatformManager : MonoBehaviour
 
     //Other variables
     private PlatformPropabilityCounter _propabilityComponent;
+    private float _defaultSpeed;
+    public float DefaultSpeed { get { return _defaultSpeed;} }
 
     private void Awake()
     {
@@ -52,6 +53,7 @@ public class PlatformManager : MonoBehaviour
 
     void Start()
     {
+        _defaultSpeed = _platformSpeed;
         normalPlatformsPool = new List<GameObject>();
         longPlatformsPool = new List<GameObject>();
         doublePlatformsPool = new List<GameObject>();

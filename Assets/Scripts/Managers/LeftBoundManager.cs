@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LeftBoundManager : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
 
         if (other.CompareTag("Platform") || other.CompareTag("StartingPlatform")

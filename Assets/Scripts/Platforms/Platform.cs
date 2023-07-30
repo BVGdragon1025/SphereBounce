@@ -32,7 +32,7 @@ public abstract class Platform : MonoBehaviour
     private void Update()
     {
         if (!SphereController.Instance.isDead)
-            transform.Translate(PlatformManager.Instance.GetPlatformSpeed * Time.deltaTime * Vector3.left);
+            transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
     }
 
     public abstract void BounceSphere();
