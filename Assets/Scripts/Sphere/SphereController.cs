@@ -35,9 +35,10 @@ public class SphereController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isInAir && !isDead)
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
+            if(isInAir && !isDead)
+                sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
         }
     }
 
