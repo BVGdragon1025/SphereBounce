@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Variables")]
     public bool isGameStarted = false;
+    private BackgroundScroller _backgroundScroller;
 
     public static GameManager Instance;
 
@@ -49,13 +50,15 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-        
+
+        _backgroundScroller = GetComponent<BackgroundScroller>();
+
     }
 
     private void Start()
     {
         ShowMenu();
-        
+
     }
 
     public void AddScore()
@@ -120,6 +123,18 @@ public class GameManager : MonoBehaviour
     public void ResetScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ChangeScrollingSpeed(bool shouldChange)
+    {
+        if (shouldChange)
+        {
+            _backgroundScroller.scrollSpeed *= 2;
+        }
+        else
+        {
+            _backgroundScroller.scrollSpeed = _backgroundScroller.startingSpeed;
+        }
     }
 
     /*

@@ -16,7 +16,9 @@ public class PlatformHighJump : Platform
     {
         Debug.Log("Coroutine start!");
         PlatformManager.Instance.PlatformSpeed *= 2.0f;
+        GameManager.Instance.ChangeScrollingSpeed(true);
         yield return new WaitForSeconds(0.5f);
+        GameManager.Instance.ChangeScrollingSpeed(false);
         PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
         Debug.Log("Coroutine end.");
     }
@@ -30,5 +32,6 @@ public class PlatformHighJump : Platform
     {
         StopCoroutine(ChangePlatformsSpeed());
         PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
+        GameManager.Instance.ChangeScrollingSpeed(false);
     }
 }
