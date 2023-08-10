@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
     private int _currentCombo = 0;
     public int CurrentCombo { get { return _currentCombo; } set { _currentCombo = value; } }
 
+    [SerializeField]
+    private GameObject _menuCanvas;
+    [SerializeField]
+    private GameObject _scoreCanvas;
+
     public static GameManager Instance;
 
     private void Awake()
@@ -26,6 +31,12 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    private void Start()
+    {
+        ShowMenu();
+        Time.timeScale = 0.0f;
     }
 
     public void AddScore()
@@ -44,6 +55,27 @@ public class GameManager : MonoBehaviour
     private void UpdateCombo()
     {
         _comboText.text = $"Combo: {_currentCombo}";
+    }
+
+    private void ShowMenu()
+    {
+        if (!_menuCanvas.activeInHierarchy)
+        {
+            _menuCanvas.SetActive(true); 
+        }
+        _scoreCanvas.SetActive(false);
+    }
+
+    public void ShowScore(bool isScoreActive)
+    {
+        _scoreCanvas.SetActive(isScoreActive);
+        StartGame();
+    }
+
+    private void StartGame()
+    {
+        _menuCanvas.SetActive(false);
+        Time.timeScale = 1;
     }
 
 }
