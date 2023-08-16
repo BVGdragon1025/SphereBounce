@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8113135284856351942}
   - component: {fileID: 8113135284856351943}
   - component: {fileID: 34259149}
+  - component: {fileID: 1602837586}
   m_Layer: 0
   m_Name: PlatformManager
   m_TagString: Untagged
@@ -49,7 +50,7 @@ MonoBehaviour:
     type: 3}
   _longPlatformPrefab: {fileID: 6282009138094873969, guid: 3f6456fdb1340e7469f9f5810ffe6675,
     type: 3}
-  _doublePlatformPrefab: {fileID: 4158123932094786310, guid: 73ff1854f0f8476469f95f8effc7d28b,
+  _doublePlatformPrefab: {fileID: 9001798881811153757, guid: 88f2b43d8cd8a8a4086177cb5c2066f4,
     type: 3}
   _maxAmountToPool: 6
   _spaceBetweenPlatforms: 2.5
@@ -70,6 +71,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _normalPlatformChance: 0.5
-  _longPlatformChance: 0.25
+  _longPlatformChance: 0.2
   _doublePlatformChance: 0.3
   _propabilityDecrease: 0.1
+--- !u!65 &1602837586
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8113135284856351940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 0.29906225, z: 1}
+  m_Center: {x: 0, y: 0.099531114, z: 0}

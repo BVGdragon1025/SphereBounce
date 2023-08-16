@@ -8,7 +8,7 @@ public class DeadZoneController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SphereController.Instance.MarkAsDead();
+            GameManager.Instance.GameOver();
         }
     }
 }

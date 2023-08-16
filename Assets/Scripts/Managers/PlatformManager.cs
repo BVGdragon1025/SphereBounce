@@ -21,9 +21,9 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private float _platformSpeed;
 
-    public float GetPlatformSpeed { get { return _platformSpeed; } }
-    public float SetPlatformSpeed { set { _platformSpeed = value; } }
+    public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
+    public int MaxPoolCount { get { return _maxAmountToPool; }}
     public static PlatformManager Instance;
 
     [Header("Platform Pools Section")]
@@ -33,6 +33,8 @@ public class PlatformManager : MonoBehaviour
 
     //Other variables
     private PlatformPropabilityCounter _propabilityComponent;
+    private float _defaultSpeed;
+    public float DefaultSpeed { get { return _defaultSpeed;} }
 
     private void Awake()
     {
@@ -51,6 +53,7 @@ public class PlatformManager : MonoBehaviour
 
     void Start()
     {
+        _defaultSpeed = _platformSpeed;
         normalPlatformsPool = new List<GameObject>();
         longPlatformsPool = new List<GameObject>();
         doublePlatformsPool = new List<GameObject>();
@@ -59,6 +62,22 @@ public class PlatformManager : MonoBehaviour
         SetObjectPool(_longPlatformPrefab, longPlatformsPool);
         SetObjectPool(_doublePlatformPrefab, doublePlatformsPool);
 
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log($"{other.tag}");
+
+        if (other.CompareTag("Platform") || other.CompareTag("DoublePlatform"))
+        {
+            GameObject platform = GetPooledObject();
+
+            if(platform != null)
+            {
+                Debug.Log("Platform is not null");
+                SpawnPlatform(platform, other.gameObject);
+            }
+        }
     }
 
     public GameObject GetPooledObject()
@@ -100,6 +119,30 @@ public class PlatformManager : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    private void SpawnPlatform(GameObject platform, GameObject otherPlatform)
+    {
+
+        Vector3 otherObjectPos = otherPlatform.transform.position;
+        Debug.Log($"{otherObjectPos}");
+
+        switch (otherPlatform.tag)
+        {
+            case "DoublePlatform":
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 2), otherObjectPos.y, otherObjectPos.z);
+                break;
+            case "Platform":
+                platform.transform.position = new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, otherObjectPos.y, otherObjectPos.z);
+                break;
+            default:
+                Debug.Log("Non-platform object has exited the collider.");
+                break;
+        }
+
+        platform.SetActive(true);
+
+        Debug.Log($"{otherObjectPos}");
     }
 
 }

@@ -12,6 +12,7 @@ public class SphereController : MonoBehaviour
     [HideInInspector]
     public Rigidbody sphereRb;
     public bool isDead;
+    public Vector3 defaultPosition;
 
     private void Awake()
     {
@@ -31,13 +32,15 @@ public class SphereController : MonoBehaviour
     void Start()
     {
         sphereRb = GetComponent<Rigidbody>();
+        defaultPosition = transform.position;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isInAir && !isDead)
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
+            if(isInAir && !isDead && GameManager.Instance.isGameStarted)
+                sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
         }
     }
 
@@ -45,7 +48,11 @@ public class SphereController : MonoBehaviour
     {
         isDead = true;
         Debug.Log("Player is dead!");
-        Time.timeScale = 0;
+    }
+
+    public void ResetPlayerPosition()
+    {
+        transform.position = defaultPosition;
     }
 
 }

@@ -4,37 +4,14 @@ using UnityEngine;
 
 public class LeftBoundManager : MonoBehaviour
 {
-    [SerializeField]
-    private int _platformCount;
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
 
-        if (other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("StartingPlatform"))
+        if (other.CompareTag("Platform") || other.CompareTag("StartingPlatform")
+            || other.CompareTag("DoublePlatform") || other.CompareTag("GoodPlatform"))
         {
-            GameObject platform = PlatformManager.Instance.GetPooledObject();
-
-            if (platform != null)
-            {
-                _platformCount++;
-                SpawnPlatform(platform, _platformCount);
-            }
-
             other.gameObject.SetActive(false);
         }
-    }
 
-    private void SpawnPlatform(GameObject platform, int platformsCount)
-    {
-        if(platformsCount == 1 || (platformsCount % 5 == 0))
-        {
-            platform.transform.position = new Vector3(PlatformManager.Instance.GetSpaceBetweenPlatforms * 3, PlatformManager.Instance.transform.position.y, PlatformManager.Instance.transform.position.z);
-        }
-        else
-        {
-            platform.transform.position = PlatformManager.Instance.transform.position;
-        }
-        platform.SetActive(true);
     }
-
 }
