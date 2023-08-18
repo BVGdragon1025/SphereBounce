@@ -52,12 +52,15 @@ MonoBehaviour:
     type: 3}
   _doublePlatformPrefab: {fileID: 9001798881811153757, guid: 88f2b43d8cd8a8a4086177cb5c2066f4,
     type: 3}
-  _maxAmountToPool: 6
+  _speedPlatformPrefab: {fileID: 9001798881811153757, guid: 3acd85eb993ffb54a847c20905415fd6,
+    type: 3}
+  _maxAmountToPool: 10
   _spaceBetweenPlatforms: 2.5
   _platformSpeed: 2.5
   normalPlatformsPool: []
   longPlatformsPool: []
   doublePlatformsPool: []
+  speedPlatformsPool: []
 --- !u!114 &34259149
 MonoBehaviour:
   m_ObjectHideFlags: 0

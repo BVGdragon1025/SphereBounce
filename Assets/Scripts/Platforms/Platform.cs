@@ -1,20 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Platform : MonoBehaviour
 {
     [SerializeField]
     protected float bounceForce;
+    protected Rigidbody playerRb;
+
     private Vector3 _startingPosition;
+
+    private void Start()
+    {
+        _startingPosition = transform.position;
+        playerRb = SphereController.Instance.sphereRb;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.isGameStarted)
         {
-            SphereController.Instance.sphereRb.velocity = Vector3.zero;
+            playerRb.velocity = Vector3.zero;
             BounceSphere();
+            Debug.Log($"Player velocity: {playerRb.velocity}");
             if (!CompareTag("StartingPlatform"))
             {
                 GameManager.Instance.AddScore();
@@ -30,10 +40,7 @@ public abstract class Platform : MonoBehaviour
             SphereController.Instance.isInAir = true;
     }
 
-    private void Start()
-    {
-        _startingPosition = transform.position;
-    }
+
 
     private void Update()
     {

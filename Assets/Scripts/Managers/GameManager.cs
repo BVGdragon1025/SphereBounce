@@ -125,16 +125,21 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ChangeScrollingSpeed(bool shouldChange)
+
+    ///<summary>
+    ///Changes scrolling speed back to default speed
+    ///</summary>
+    public void ChangeScrollingSpeed()
     {
-        if (shouldChange)
-        {
-            _backgroundScroller.scrollSpeed *= 2;
-        }
-        else
-        {
-            _backgroundScroller.scrollSpeed = _backgroundScroller.startingSpeed;
-        }
+        _backgroundScroller.scrollSpeed = _backgroundScroller.startingSpeed;
+    }
+
+    ///<summary>
+    ///Changes scrolling speed based on specified multiplier
+    ///</summary>
+    public void ChangeScrollingSpeed(float speedMultiplier)
+    {
+        _backgroundScroller.scrollSpeed *= speedMultiplier;
     }
 
     /*

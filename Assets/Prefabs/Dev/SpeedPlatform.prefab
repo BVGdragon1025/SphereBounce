@@ -96,9 +96,9 @@ GameObject:
   - component: {fileID: 9001798881811153759}
   - component: {fileID: 9001798881811153756}
   - component: {fileID: 5992511788660274008}
-  - component: {fileID: 5992511788660274011}
+  - component: {fileID: 6649459488071269777}
   m_Layer: 0
-  m_Name: HighJumpPlatformDev
+  m_Name: SpeedPlatform
   m_TagString: DoublePlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 89b8cc836f30c7a43911f3a3dabe3037, type: 2}
+  - {fileID: 2100000, guid: 658f5fa880073e24fbc5b7051c451a88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -199,7 +199,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
---- !u!114 &5992511788660274011
+--- !u!114 &6649459488071269777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,7 +208,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 9001798881811153757}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e9d7ca6dd053214a86b15d2b53b0381, type: 3}
+  m_Script: {fileID: 11500000, guid: c51a5d8fb0055ca47be83de84d038750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 8
+  bounceForce: 7
+  _speedMultiplier: 3

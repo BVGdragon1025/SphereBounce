@@ -3181,7 +3181,7 @@ PrefabInstance:
     - target: {fileID: 7011426531578910211, guid: 32a5abec09eff5642affda2d317b74b3,
         type: 3}
       propertyPath: m_Name
-      value: NormalPlatformDev
+      value: StartingPlatform
       objectReference: {fileID: 0}
     - target: {fileID: 7011426531578910211, guid: 32a5abec09eff5642affda2d317b74b3,
         type: 3}
@@ -3329,6 +3329,26 @@ PrefabInstance:
       propertyPath: _normalPlatformChance
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
+      propertyPath: _platformChance.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
+      propertyPath: _platformChance.Array.data[0]
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
+      propertyPath: _platformChance.Array.data[1]
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
+      propertyPath: _platformChance.Array.data[2]
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
+      propertyPath: _platformChance.Array.data[3]
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8113135284856351940, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b,
         type: 3}
       propertyPath: m_Name
@@ -3388,11 +3408,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8113135284856351943, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b,
-        type: 3}
-      propertyPath: _maxAmountToPool
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}

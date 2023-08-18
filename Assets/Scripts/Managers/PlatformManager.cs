@@ -12,6 +12,8 @@ public class PlatformManager : MonoBehaviour
     private GameObject _longPlatformPrefab;
     [SerializeField]
     private GameObject _doublePlatformPrefab;
+    [SerializeField]
+    private GameObject _speedPlatformPrefab;
 
     [Header("Platform Control Section")]
     [SerializeField]
@@ -30,6 +32,7 @@ public class PlatformManager : MonoBehaviour
     public List<GameObject> normalPlatformsPool;
     public List<GameObject> longPlatformsPool;
     public List<GameObject> doublePlatformsPool;
+    public List<GameObject> speedPlatformsPool;
 
     //Other variables
     private PlatformPropabilityCounter _propabilityComponent;
@@ -57,10 +60,12 @@ public class PlatformManager : MonoBehaviour
         normalPlatformsPool = new List<GameObject>();
         longPlatformsPool = new List<GameObject>();
         doublePlatformsPool = new List<GameObject>();
+        speedPlatformsPool = new List<GameObject>();
 
         SetObjectPool(_normalPlatformPrefab, normalPlatformsPool);
         SetObjectPool(_longPlatformPrefab, longPlatformsPool);
         SetObjectPool(_doublePlatformPrefab, doublePlatformsPool);
+        SetObjectPool(_speedPlatformPrefab, speedPlatformsPool);
 
     }
 
@@ -116,6 +121,8 @@ public class PlatformManager : MonoBehaviour
                 return longPlatformsPool;
             case 2:
                 return doublePlatformsPool;
+            case 3:
+                return speedPlatformsPool;
             default:
                 return null;
         }
