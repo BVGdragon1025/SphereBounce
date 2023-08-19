@@ -155,4 +155,32 @@ public class PlatformManager : MonoBehaviour
         Debug.Log($"{otherObjectPos}");
     }
 
+    public void ResetAllPooledPlatforms()
+    {
+        for(int i = 0; i < normalPlatformsPool.Count; i++)
+        {
+            if(normalPlatformsPool[i].activeInHierarchy)
+                normalPlatformsPool[i].SetActive(false);
+        }
+
+        for(int i = 0; i < doublePlatformsPool.Count; i++)
+        {
+            if(doublePlatformsPool[i].activeInHierarchy)
+                doublePlatformsPool[i].SetActive(false);
+        }
+
+        for(int i = 0; i < speedPlatformsPool.Count; i++)
+        {
+            if(speedPlatformsPool[i].activeInHierarchy)
+                speedPlatformsPool[i].SetActive(false);
+        }
+
+        //TODO: Fix this part, because I think it breaks something
+        for(int i = 0; i < longPlatformsPool.Count; i++)
+        {
+            if(longPlatformsPool[i].activeInHierarchy)
+                longPlatformsPool[i].SetActive(false);
+        }
+    }
+
 }

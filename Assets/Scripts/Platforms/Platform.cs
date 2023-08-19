@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Platform : MonoBehaviour
@@ -42,20 +41,14 @@ public abstract class Platform : MonoBehaviour
 
     private void Update()
     {
-        if (!SphereController.Instance.isDead && GameManager.Instance.isGameStarted)
+        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted)
             transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
     }
-
-    private void OnDisable()
-    {
-        ResetPlatformPosition();
-    }
-
     public abstract void BounceSphere();
 
-    private void ResetPlatformPosition()
+    public void ResetPlatformPosition()
     {
-        _startingPosition = transform.position;
+        transform.position = _startingPosition;
     }
 
 }

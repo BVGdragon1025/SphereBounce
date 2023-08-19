@@ -32,11 +32,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Not pooled platforms")]
     [SerializeField]
-    private GameObject _notPooledPlatforms;
+    private GameObject[] _notPooled = new GameObject[4];
 
     [Header("Variables")]
     public bool isGameStarted = false;
-    private BackgroundScroller _backgroundScroller;
 
     public static GameManager Instance;
 
@@ -50,8 +49,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        _backgroundScroller = GetComponent<BackgroundScroller>();
 
     }
 
@@ -113,7 +110,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        SphereController.Instance.MarkAsDead();
+        SphereController.Instance.MarkAsDead(true);
         isGameStarted = false;
         _scoreCanvasObject.SetActive(false);
         _gameOverCanvasObject.SetActive(true);
@@ -125,5 +122,28 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void RestartGame()
+    {
+        _gameOverCanvasObject.SetActive(false);
+        _scoreCanvasObject.SetActive(true);
+        
+        _currentCombo = 0;
+        _currentScore = 0;
+        UpdateScore(_currentScore);
+
+        for(int i = 0; i < _notPooled.Length; i++)
+        {
+            _notPooled[i].GetComponent<Platform>().ResetPlatformPosition();
+
+            if(!_notPooled[i].activeInHierarchy)
+                _notPooled[i].SetActive(true);
+        }
+
+        SphereController.Instance.ResetPlayerPosition();
+        SphereController.Instance.MarkAsDead(false);
+
+        isGameStarted = true;
+       
+    }
 
 }
