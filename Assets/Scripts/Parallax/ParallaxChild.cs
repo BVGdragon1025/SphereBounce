@@ -18,14 +18,14 @@ public class ParallaxChild : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _scrollSpeed = GetComponentInParent<ParallaxParent>().defaultParallaxSpeed;
-
-        SetupTexture();
-
         if (_shouldScrollLeft)
             _scrollSpeedMultiplier = -_scrollSpeedMultiplier;
 
         _defaultPositionX = transform.localPosition.x;
+        _scrollSpeed = GetComponentInParent<ParallaxParent>().defaultParallaxSpeed;
+
+        SetupTexture();
+        
     }
 
     // Update is called once per frame

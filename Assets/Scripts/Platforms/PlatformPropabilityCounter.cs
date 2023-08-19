@@ -40,7 +40,7 @@ public class PlatformPropabilityCounter : MonoBehaviour
             return 1;
         }
 
-        if((1 - _platformChance[1]) < randomFloat && randomFloat <= (1 - _platformChance[2]) )
+        if((1 - _platformChance[1]) < randomFloat && randomFloat <= (1 - _platformChance[2]))
         {
             Debug.Log("Now spawning: High Jump Platform");
             /*

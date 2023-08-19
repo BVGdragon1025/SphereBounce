@@ -40,8 +40,6 @@ public abstract class Platform : MonoBehaviour
             SphereController.Instance.isInAir = true;
     }
 
-
-
     private void Update()
     {
         if (!SphereController.Instance.isDead && GameManager.Instance.isGameStarted)

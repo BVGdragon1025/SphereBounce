@@ -126,21 +126,4 @@ public class GameManager : MonoBehaviour
     }
 
 
-    ///<summary>
-    ///Changes scrolling speed back to default speed
-    ///</summary>
-    public void ChangeScrollingSpeed()
-    {
-        _backgroundScroller.scrollSpeed = _backgroundScroller.startingSpeed;
-    }
-
-    ///<summary>
-    ///Changes scrolling speed based on specified multiplier
-    ///</summary>
-    public void ChangeScrollingSpeed(float speedMultiplier)
-    {
-        _backgroundScroller.scrollSpeed *= speedMultiplier;
-    }
-
-
 }

@@ -19,9 +19,7 @@ public class PlatformSpeed : Platform
     {
         Debug.Log("Coroutine start!");
         PlatformManager.Instance.PlatformSpeed *= 2.0f;
-        //GameManager.Instance.ChangeScrollingSpeed(_speedMultiplier);
         yield return new WaitForSeconds(0.5f);
-        //GameManager.Instance.ChangeScrollingSpeed();
         PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
         Debug.Log("Coroutine end.");
     }
@@ -35,6 +33,5 @@ public class PlatformSpeed : Platform
     {
         StopCoroutine(ChangePlatformsSpeed());
         PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
-        //GameManager.Instance.ChangeScrollingSpeed();
     }
 }
