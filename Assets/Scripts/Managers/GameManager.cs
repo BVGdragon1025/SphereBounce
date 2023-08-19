@@ -142,25 +142,5 @@ public class GameManager : MonoBehaviour
         _backgroundScroller.scrollSpeed *= speedMultiplier;
     }
 
-    /*
-    public void RestartGame()
-    {
-        _scoreCanvasObject.SetActive(true);
-        _gameOverCanvasObject.SetActive(false);
-        _menuCanvasObject.SetActive(false);
-        SphereController.Instance.ResetPlayerPosition();
-        ResetPlatforms();
-        _maxCombo = 0;
-        _currentCombo = _maxCombo;
-        _currentScore = 0;
-    }
 
-    private void ResetPlatforms()
-    {
-        for(int i = 0; i < _notPooledPlatforms.transform.childCount; i++)
-        {
-            _notPooledPlatforms.transform.GetChild(i).gameObject.SetActive(true);
-        }
-    }
-    */
 }

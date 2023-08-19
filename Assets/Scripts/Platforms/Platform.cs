@@ -15,7 +15,7 @@ public abstract class Platform : MonoBehaviour
     private void Start()
     {
         _startingPosition = transform.position;
-        playerRb = SphereController.Instance.sphereRb;
+        playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)

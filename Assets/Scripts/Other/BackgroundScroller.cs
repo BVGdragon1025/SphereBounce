@@ -7,7 +7,6 @@ public class BackgroundScroller : MonoBehaviour
 {
     [SerializeField]
     private RawImage _bgImage;
-    [SerializeField]
     public float scrollSpeed;
     public float startingSpeed;
 

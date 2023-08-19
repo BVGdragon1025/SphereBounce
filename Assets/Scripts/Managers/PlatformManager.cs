@@ -38,9 +38,12 @@ public class PlatformManager : MonoBehaviour
     private PlatformPropabilityCounter _propabilityComponent;
     private float _defaultSpeed;
     public float DefaultSpeed { get { return _defaultSpeed;} }
+    public float CurrentPlatformSpeed { get { return _platformSpeed; } }
 
     private void Awake()
     {
+        
+
         if(Instance != null)
         {
             Destroy(gameObject);
@@ -49,7 +52,7 @@ public class PlatformManager : MonoBehaviour
         {
             Instance = this;
         }
-        
+
         _propabilityComponent = GetComponent<PlatformPropabilityCounter>();
 
     }
