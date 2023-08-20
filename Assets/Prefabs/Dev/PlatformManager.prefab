@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1602837586}
   m_Layer: 0
   m_Name: PlatformManager
-  m_TagString: Untagged
+  m_TagString: PlatformManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,9 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e927427ec29a94299470e7b0454e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _normalPlatformChance: 0.5
-  _longPlatformChance: 0.2
-  _doublePlatformChance: 0.3
+  _platformChance: []
   _propabilityDecrease: 0.1
 --- !u!65 &1602837586
 BoxCollider:

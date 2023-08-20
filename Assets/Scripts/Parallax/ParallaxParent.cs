@@ -6,9 +6,12 @@ public class ParallaxParent : MonoBehaviour
 {
     public float defaultParallaxSpeed;
 
+    private PlatformManager _manager;
+
     // Start is called before the first frame update
     void Awake()
     {
-        defaultParallaxSpeed = PlatformManager.Instance.CurrentPlatformSpeed;
+        _manager = GameObject.FindGameObjectWithTag("PlatformManager").GetComponent<PlatformManager>();
+        defaultParallaxSpeed = _manager.CurrentPlatformSpeed;
     }
 }

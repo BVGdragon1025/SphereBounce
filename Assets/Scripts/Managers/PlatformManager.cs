@@ -42,8 +42,6 @@ public class PlatformManager : MonoBehaviour
 
     private void Awake()
     {
-        
-
         if(Instance != null)
         {
             Destroy(gameObject);
@@ -76,7 +74,7 @@ public class PlatformManager : MonoBehaviour
     {
         Debug.Log($"{other.tag}");
 
-        if (other.CompareTag("Platform") || other.CompareTag("DoublePlatform"))
+        if (other.CompareTag("Platform") || other.CompareTag("DoublePlatform") || other.CompareTag("HighJumpPlatform") || other.CompareTag("SpawnNext"))
         {
             GameObject platform = GetPooledObject();
 
@@ -145,6 +143,12 @@ public class PlatformManager : MonoBehaviour
             case "Platform":
                 platform.transform.position = new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, otherObjectPos.y, otherObjectPos.z);
                 break;
+            case "HighJumpPlatform":
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.5f), otherObjectPos.y, otherObjectPos.z);
+                break;
+            case "SpawnNext":
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.2f), otherObjectPos.y, otherObjectPos.z);
+                break;
             default:
                 Debug.Log("Non-platform object has exited the collider.");
                 break;
@@ -175,7 +179,6 @@ public class PlatformManager : MonoBehaviour
                 speedPlatformsPool[i].SetActive(false);
         }
 
-        //TODO: Fix this part, because I think it breaks something
         for(int i = 0; i < longPlatformsPool.Count; i++)
         {
             if(longPlatformsPool[i].activeInHierarchy)

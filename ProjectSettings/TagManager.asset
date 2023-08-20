@@ -8,7 +8,9 @@ TagManager:
   - StartingPlatform
   - LeftBound
   - DoublePlatform
-  - GoodPlatform
+  - PlatformManager
+  - HighJumpPlatform
+  - SpawnNext
   layers:
   - Default
   - TransparentFX

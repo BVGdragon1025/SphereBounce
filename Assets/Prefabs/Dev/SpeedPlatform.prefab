@@ -212,4 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounceForce: 7
+  shouldMove: 1
+  _startingPosition: {x: 0, y: 0, z: 0}
   _speedMultiplier: 3

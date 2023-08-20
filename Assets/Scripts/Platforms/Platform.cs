@@ -8,6 +8,8 @@ public abstract class Platform : MonoBehaviour
     [SerializeField]
     protected float bounceForce;
     protected Rigidbody playerRb;
+    [SerializeField]
+    protected bool shouldMove;
 
     private Vector3 _startingPosition;
 
@@ -41,7 +43,7 @@ public abstract class Platform : MonoBehaviour
 
     private void Update()
     {
-        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted)
+        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted && shouldMove)
             transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
     }
     public abstract void BounceSphere();

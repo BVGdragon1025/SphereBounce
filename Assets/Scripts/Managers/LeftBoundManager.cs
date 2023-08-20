@@ -8,7 +8,7 @@ public class LeftBoundManager : MonoBehaviour
     {
 
         if (other.CompareTag("Platform") || other.CompareTag("StartingPlatform")
-            || other.CompareTag("DoublePlatform") || other.CompareTag("GoodPlatform"))
+            || other.CompareTag("DoublePlatform") || other.CompareTag("HighJumpPlatform"))
         {
             other.gameObject.SetActive(false);
         }

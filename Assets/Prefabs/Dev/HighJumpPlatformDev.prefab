@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5992511788660274011}
   m_Layer: 0
   m_Name: HighJumpPlatformDev
-  m_TagString: DoublePlatform
+  m_TagString: HighJumpPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,3 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounceForce: 8
+  shouldMove: 1
+  _startingPosition: {x: 0, y: 0, z: 0}
+  _timeInAir: 0
