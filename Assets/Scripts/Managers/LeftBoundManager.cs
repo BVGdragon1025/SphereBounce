@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class LeftBoundManager : MonoBehaviour
 {
+    [SerializeField]
+    private List<string> _allowedTags;
+
     private void OnTriggerExit(Collider other)
     {
-
-        if (other.CompareTag("Platform") || other.CompareTag("StartingPlatform")
-            || other.CompareTag("DoublePlatform") || other.CompareTag("HighJumpPlatform"))
+        for(int i = 0; i < _allowedTags.Count; i++)
         {
-            other.gameObject.SetActive(false);
+            if (other.CompareTag(_allowedTags[i]))
+            {
+                other.gameObject.SetActive(false);
+            }
         }
 
     }

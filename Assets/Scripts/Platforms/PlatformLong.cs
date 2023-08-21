@@ -2,56 +2,71 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformLong : MonoBehaviour
+public class PlatformLong : Platform
 {
-    private LeftBoundManager _leftBound;
+    [SerializeField, Tooltip("Bounce multiplier for 'good platforms (green ones in debug)'. \n 1 - Default Bounce Force "), Range(1.0f, 2.0f)]
+    private float _bounceMultiplier;
     [SerializeField]
     private GameObject[] _children;
+    [SerializeField]
+    private float[] _childrenBounceForce;
+    [SerializeField]
+    private Renderer[] _childrenRenderer;
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        _leftBound = GameObject.FindGameObjectWithTag("LeftBound").GetComponent<LeftBoundManager>();
         _children = new GameObject[transform.childCount];
+        _childrenBounceForce = new float[transform.childCount];
+        _childrenRenderer = new Renderer[transform.childCount];
 
-        for(int i = 0; i < _children.Length; i++)
+        for (int i = 0; i < _children.Length; i++)
         {
             _children[i] = transform.GetChild(i).gameObject;
+
+            _childrenRenderer[i] = _children[i].GetComponent<Renderer>();
+
+            if (_children[i].CompareTag("GoodPlatform"))
+                _childrenBounceForce[i] = bounceForce * _bounceMultiplier;
+
+            if (_children[i].CompareTag("ComboBreaker"))
+                _childrenBounceForce[i] = bounceForce;
         }
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void BounceSphere()
     {
-        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted)
-            transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
+        int amountOfCollisions = 0;
+        int currentCollision = 0;
 
-        DisablePlatforms();
-    }
-
-    private void OnEnable()
-    {
-        ChangeChildPatformState(true);
-    }
-
-    void DisablePlatforms()
-    {
-        if (transform.position.x < (_leftBound.transform.position.x * 1.5))
-        {
-            gameObject.SetActive(false);
-            ChangeChildPatformState(false);
-        }
-    }
-
-    void ChangeChildPatformState(bool shouldBeActive)
-    {
         for(int i = 0; i < _children.Length; i++)
         {
-            _children[i].SetActive(shouldBeActive);
+            if (_childrenRenderer[i].bounds.Intersects(playerColl.bounds))
+            {
+                amountOfCollisions++;
+                currentCollision = i;
+                Debug.Log($"Collider intersecting: {_children[i].tag}, amount: {amountOfCollisions}, current: {currentCollision} ");
+
+            }
+        }
+
+        if(amountOfCollisions > 1)
+        {
+            var correctForce = Mathf.Min(bounceForce, bounceForce * _bounceMultiplier);
+            playerRb.AddForce(Vector3.up * correctForce, ForceMode.Impulse);
+            GameManager.Instance.CurrentCombo = 1;
+        }
+        else
+        {
+            playerRb.AddForce(Vector3.up * _childrenBounceForce[currentCollision], ForceMode.Impulse);
+
+            if (_children[currentCollision].CompareTag("GoodPlatform"))
+                GameManager.Instance.CurrentCombo += 1;
+
+            if (_children[currentCollision].CompareTag("ComboBreaker"))
+                GameManager.Instance.CurrentCombo = 1;
+
         }
     }
-
-
 
 }

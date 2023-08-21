@@ -11,6 +11,8 @@ TagManager:
   - PlatformManager
   - HighJumpPlatform
   - SpawnNext
+  - GoodPlatform
+  - ComboBreaker
   layers:
   - Default
   - TransparentFX

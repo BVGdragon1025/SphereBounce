@@ -37,6 +37,14 @@ public class SphereController : MonoBehaviour
         defaultPosition = transform.position;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider)
+        {
+            Debug.Log($"Collided with: {collision.collider}, tag: {collision.gameObject.tag}");
+        }
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))

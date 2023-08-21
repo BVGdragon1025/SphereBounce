@@ -6,6 +6,8 @@ public class PlatformSpeed : Platform
 {
     [SerializeField, Tooltip("Speed multiplier by which platforms and background will be moving"), Range(0.1f, 3.0f)]
     private float _speedMultiplier;
+    [SerializeField, Tooltip("How long increased speed effect will last, 0 - no speed increase.")]
+    private float _speedTimer;
 
     public override void BounceSphere()
     {
@@ -19,14 +21,11 @@ public class PlatformSpeed : Platform
     {
         Debug.Log("Coroutine start!");
         PlatformManager.Instance.PlatformSpeed *= 2.0f;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(_speedTimer);
         PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
         Debug.Log("Coroutine end.");
-    }
-
-    private void OnDisable()
-    {
-        ResetPlatformSpeed();
+        yield return new WaitForSeconds(_speedTimer + 0.2f);
+        gameObject.SetActive(false);
     }
 
     private void ResetPlatformSpeed()

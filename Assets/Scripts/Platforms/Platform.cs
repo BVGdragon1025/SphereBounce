@@ -8,6 +8,8 @@ public abstract class Platform : MonoBehaviour
     [SerializeField]
     protected float bounceForce;
     protected Rigidbody playerRb;
+    protected Collider playerColl;
+    protected float playerHitLocation;
     [SerializeField]
     protected bool shouldMove;
 
@@ -17,6 +19,7 @@ public abstract class Platform : MonoBehaviour
     {
         _startingPosition = transform.position;
         playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+        playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -24,8 +27,9 @@ public abstract class Platform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.isGameStarted)
         {
             playerRb.velocity = Vector3.zero;
+            playerHitLocation = -transform.localPosition.x;
+            Debug.Log($"Player hit on: {transform.position.x}");
             BounceSphere();
-            Debug.Log($"Player velocity: {playerRb.velocity}");
             if (!CompareTag("StartingPlatform"))
             {
                 GameManager.Instance.AddScore();

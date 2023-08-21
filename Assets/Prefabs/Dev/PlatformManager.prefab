@@ -57,6 +57,11 @@ MonoBehaviour:
   _maxAmountToPool: 10
   _spaceBetweenPlatforms: 2.5
   _platformSpeed: 2.5
+  _platformTags:
+  - Platform
+  - DoublePlatform
+  - HighJumpPlatform
+  - SpawnNext
   normalPlatformsPool: []
   longPlatformsPool: []
   doublePlatformsPool: []
@@ -73,7 +78,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e927427ec29a94299470e7b0454e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _platformChance: []
+  _platformChance:
+  - 0.35
+  - 0.2
+  - 0.15
+  - 0.3
   _propabilityDecrease: 0.1
 --- !u!65 &1602837586
 BoxCollider:

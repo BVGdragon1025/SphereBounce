@@ -22,6 +22,8 @@ public class PlatformManager : MonoBehaviour
     private float _spaceBetweenPlatforms;
     [SerializeField]
     private float _platformSpeed;
+    [SerializeField]
+    private List<string> _platformTags;
 
     public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
@@ -73,17 +75,20 @@ public class PlatformManager : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Debug.Log($"{other.tag}");
-
-        if (other.CompareTag("Platform") || other.CompareTag("DoublePlatform") || other.CompareTag("HighJumpPlatform") || other.CompareTag("SpawnNext"))
+        for(int i = 0; i < _platformTags.Count; i++)
         {
-            GameObject platform = GetPooledObject();
-
-            if(platform != null)
+            if (other.CompareTag(_platformTags[i]))
             {
-                Debug.Log("Platform is not null");
-                SpawnPlatform(platform, other.gameObject);
+                GameObject platform = GetPooledObject();
+
+                if (platform != null)
+                {
+                    Debug.Log("Platform is not null");
+                    SpawnPlatform(platform, other.gameObject);
+                }
             }
         }
+        
     }
 
     public GameObject GetPooledObject()
@@ -147,7 +152,7 @@ public class PlatformManager : MonoBehaviour
                 platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.5f), otherObjectPos.y, otherObjectPos.z);
                 break;
             case "SpawnNext":
-                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.2f), otherObjectPos.y, otherObjectPos.z);
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.5f), otherObjectPos.y, otherObjectPos.z);
                 break;
             default:
                 Debug.Log("Non-platform object has exited the collider.");
