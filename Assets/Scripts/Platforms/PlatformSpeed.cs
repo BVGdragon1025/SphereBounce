@@ -22,10 +22,13 @@ public class PlatformSpeed : Platform
         Debug.Log("Coroutine start!");
         PlatformManager.Instance.PlatformSpeed *= 2.0f;
         yield return new WaitForSeconds(_speedTimer);
+
         PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
         Debug.Log("Coroutine end.");
         yield return new WaitForSeconds(_speedTimer + 0.2f);
-        gameObject.SetActive(false);
+
+        if(!SphereController.Instance.IsPlayerDead) 
+            gameObject.SetActive(false);
     }
 
     private void ResetPlatformSpeed()
