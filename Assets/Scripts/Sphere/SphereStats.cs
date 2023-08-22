@@ -8,6 +8,7 @@ public class SphereStats : MonoBehaviour
     public int highCombo;
     public int endScore;
     public int endCombo;
+    public int maxCombo;
 
     private void CheckHighScore(int scoreOne, int scoreTwo)
     {
@@ -28,10 +29,11 @@ public class SphereStats : MonoBehaviour
         highCombo = loadData.highCombo;
         endScore = loadData.lastGameScore;
         endCombo = loadData.lastComboScore;
+        maxCombo = loadData.lastMaxCombo;
 
     }
 
-    public void SaveData(int currentScore, int currentCombo, int maxCombo)
+    public void SaveData(int currentScore, int currentCombo, int maxComboCount)
     {
         endScore = currentScore;
         endCombo = currentCombo;
@@ -41,10 +43,12 @@ public class SphereStats : MonoBehaviour
             highScore = endScore;
         }
 
-        if(highCombo < maxCombo)
+        if(highCombo < maxComboCount)
         {
-            highCombo = maxCombo;
+            highCombo = maxComboCount;
         }
+
+        maxCombo = maxComboCount;
 
         SaveLoadManager.SaveData(this);
     }

@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         _menuHighScore.text = $"High Score: {_sphereStats.highScore}";
         _menuLastScore.text = $"Last Run Score: {_sphereStats.endScore}";
         _menuHighCombo.text = $"Highest Combo: {_sphereStats.highCombo}";
-        _menuLastCombo.text = $"Last Run Combo: {_sphereStats.endCombo}";
+        _menuLastCombo.text = $"Last Run Combo: {_sphereStats.endCombo} ({_sphereStats.maxCombo})";
     }
 
     public void ShowScore(bool isScoreActive)
@@ -140,6 +140,7 @@ public class GameManager : MonoBehaviour
         
         _currentCombo = 0;
         _currentScore = 0;
+        _maxCombo = 0;
         UpdateScore(_currentScore);
 
         for(int i = 0; i < _notPooled.Length; i++)

@@ -9,6 +9,7 @@ public class SaveLoadClass
     public int lastGameScore;
     public int highCombo;
     public int lastComboScore;
+    public int lastMaxCombo;
 
     public SaveLoadClass(SphereStats sphereData)
     {
@@ -16,5 +17,6 @@ public class SaveLoadClass
         lastGameScore = sphereData.endScore;
         highCombo = sphereData.highCombo;
         lastComboScore = sphereData.endCombo;
+        lastMaxCombo = sphereData.maxCombo;
     }
 }
