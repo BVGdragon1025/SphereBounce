@@ -12,7 +12,7 @@ public class DebugFPSCounter : MonoBehaviour
     void Start()
     {
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && UNITY_EDITOR
     _debugCounter.gameObject.SetActive(true);
         
 #endif

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UnityEngine;
 
 public class SphereController : MonoBehaviour
@@ -11,7 +12,8 @@ public class SphereController : MonoBehaviour
     public static SphereController Instance { get; set; }
     [HideInInspector]
     public Rigidbody sphereRb;
-    public bool isDead;
+    private bool _isDead;
+    public bool IsPlayerDead { get { return _isDead; } }
     public Vector3 defaultPosition;
 
     private void Awake()
@@ -25,7 +27,7 @@ public class SphereController : MonoBehaviour
             Instance = this;
         }
 
-        isDead = false;
+        _isDead = false;
         
     }
 
@@ -35,18 +37,26 @@ public class SphereController : MonoBehaviour
         defaultPosition = transform.position;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider)
+        {
+            Debug.Log($"Collided with: {collision.collider}, tag: {collision.gameObject.tag}");
+        }
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            if(isInAir && !isDead && GameManager.Instance.isGameStarted)
+            if(isInAir && !_isDead && GameManager.Instance.isGameStarted)
                 sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
         }
     }
 
-    public void MarkAsDead()
+    public void MarkAsDead(bool isPlayerDead)
     {
-        isDead = true;
+        _isDead = isPlayerDead;
         Debug.Log("Player is dead!");
     }
 

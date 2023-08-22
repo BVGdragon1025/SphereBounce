@@ -6,7 +6,7 @@ public class PlatformNormal : Platform
 {
     public override void BounceSphere()
     {
-        SphereController.Instance.sphereRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+        playerRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
         if (!CompareTag("StartingPlatform"))
         {
             GameManager.Instance.CurrentCombo += 1;

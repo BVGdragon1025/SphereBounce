@@ -4,34 +4,59 @@ using UnityEngine;
 
 public class PlatformHighJump : Platform
 {
+    [SerializeField]
+    private float _timeInAir;
+    [SerializeField]
+    private float _maxHeight;
+
     public override void BounceSphere()
     {
-        ResetPlatformSpeed();
-        SphereController.Instance.sphereRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
-        GameManager.Instance.CurrentCombo += 2;
-        StartCoroutine(ChangePlatformsSpeed());
+        ResetFreeze();
+        playerRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+        GameManager.Instance.CurrentCombo += 1;
+        StartCoroutine(PrepareToFreeze());
     }
 
-    private IEnumerator ChangePlatformsSpeed()
+    private void Update()
     {
-        Debug.Log("Coroutine start!");
-        PlatformManager.Instance.PlatformSpeed *= 2.0f;
-        GameManager.Instance.ChangeScrollingSpeed(true);
-        yield return new WaitForSeconds(0.5f);
-        GameManager.Instance.ChangeScrollingSpeed(false);
-        PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
-        Debug.Log("Coroutine end.");
+        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted && shouldMove)
+            transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        {
+            playerRb.constraints = RigidbodyConstraints.None;
+
+        }
     }
 
-    private void OnDisable()
+    private IEnumerator FreezeInAir()
     {
-        ResetPlatformSpeed();
+        Debug.Log("Coroutine start: HighJump");
+        playerRb.constraints = RigidbodyConstraints.FreezePositionY;
+        playerRb.velocity = Vector3.zero;
+
+        yield return new WaitForSeconds(_timeInAir);
+        playerRb.constraints = RigidbodyConstraints.None;
+
+        yield return new WaitForSeconds(0.2f);
+        if (!SphereController.Instance.IsPlayerDead)
+            gameObject.SetActive(false);
+
+        Debug.Log("Coroutine end: HighJump");
+
     }
 
-    private void ResetPlatformSpeed()
+    private IEnumerator PrepareToFreeze()
     {
-        StopCoroutine(ChangePlatformsSpeed());
-        PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
-        GameManager.Instance.ChangeScrollingSpeed(false);
+        yield return new WaitForSeconds(0.3f);
+        yield return StartCoroutine(FreezeInAir());
     }
+
+    private void ResetFreeze()
+    {
+        StopCoroutine(PrepareToFreeze());
+        StopCoroutine(FreezeInAir());
+        playerRb.constraints = RigidbodyConstraints.FreezePositionX;
+    }
+
 }

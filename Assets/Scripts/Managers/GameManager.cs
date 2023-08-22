@@ -21,6 +21,14 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI _finalScoreText;
     [SerializeField]
     private TextMeshProUGUI _maxComboText;
+    [SerializeField]
+    private TextMeshProUGUI _menuHighScore;
+    [SerializeField]
+    private TextMeshProUGUI _menuLastScore;
+    [SerializeField]
+    private TextMeshProUGUI _menuHighCombo;
+    [SerializeField]
+    private TextMeshProUGUI _menuLastCombo;
 
     [Header("Game Objects with Canvas")]
     [SerializeField]
@@ -32,11 +40,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Not pooled platforms")]
     [SerializeField]
-    private GameObject _notPooledPlatforms;
+    private GameObject[] _notPooled = new GameObject[4];
 
     [Header("Variables")]
     public bool isGameStarted = false;
-    private BackgroundScroller _backgroundScroller;
+    private SphereStats _sphereStats;
 
     public static GameManager Instance;
 
@@ -51,12 +59,12 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        _backgroundScroller = GetComponent<BackgroundScroller>();
-
     }
 
     private void Start()
     {
+        _sphereStats = GameObject.FindGameObjectWithTag("Player").GetComponent<SphereStats>();
+        _sphereStats.LoadData();
         ShowMenu();
 
     }
@@ -70,21 +78,22 @@ public class GameManager : MonoBehaviour
     private void UpdateScore(int score)
     {
         _scoreText.text = $"Score: {score}";
-        _finalScoreText.text = $"Final Score: {score}";
+        _finalScoreText.text = $"Final Score: {score} (Record: {_sphereStats.highScore})";
         UpdateCombo();
 
     }
 
     private void UpdateCombo()
     {
-        _comboText.text = $"Combo: {_currentCombo}";
 
         if(_maxCombo < _currentCombo)
         {
             _maxCombo = _currentCombo;
         }
 
-        _maxComboText.text = $"Max Combo: {_maxCombo}";
+        _comboText.text = $"Combo: {_currentCombo} ({_maxCombo})";
+
+        _maxComboText.text = $"Max Combo: {_maxCombo} (Record: {_sphereStats.highCombo})";
     }
 
     private void ShowMenu()
@@ -95,6 +104,10 @@ public class GameManager : MonoBehaviour
         }
         _scoreCanvasObject.SetActive(false);
         _gameOverCanvasObject.SetActive(false);
+        _menuHighScore.text = $"High Score: {_sphereStats.highScore}";
+        _menuLastScore.text = $"Last Run Score: {_sphereStats.endScore}";
+        _menuHighCombo.text = $"Highest Combo: {_sphereStats.highCombo}";
+        _menuLastCombo.text = $"Last Run Combo: {_sphereStats.endCombo}";
     }
 
     public void ShowScore(bool isScoreActive)
@@ -113,49 +126,35 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        SphereController.Instance.MarkAsDead();
+        SphereController.Instance.MarkAsDead(true);
         isGameStarted = false;
         _scoreCanvasObject.SetActive(false);
         _gameOverCanvasObject.SetActive(true);
-
+        _sphereStats.SaveData(_currentScore, _currentCombo, _maxCombo);
     }
 
-    public void ResetScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void ChangeScrollingSpeed(bool shouldChange)
-    {
-        if (shouldChange)
-        {
-            _backgroundScroller.scrollSpeed *= 2;
-        }
-        else
-        {
-            _backgroundScroller.scrollSpeed = _backgroundScroller.startingSpeed;
-        }
-    }
-
-    /*
     public void RestartGame()
     {
-        _scoreCanvasObject.SetActive(true);
         _gameOverCanvasObject.SetActive(false);
-        _menuCanvasObject.SetActive(false);
-        SphereController.Instance.ResetPlayerPosition();
-        ResetPlatforms();
-        _maxCombo = 0;
-        _currentCombo = _maxCombo;
+        _scoreCanvasObject.SetActive(true);
+        
+        _currentCombo = 0;
         _currentScore = 0;
+        UpdateScore(_currentScore);
+
+        for(int i = 0; i < _notPooled.Length; i++)
+        {
+            _notPooled[i].GetComponent<Platform>().ResetPlatformPosition();
+
+            if(!_notPooled[i].activeInHierarchy)
+                _notPooled[i].SetActive(true);
+        }
+
+        SphereController.Instance.ResetPlayerPosition();
+        SphereController.Instance.MarkAsDead(false);
+
+        isGameStarted = true;
+       
     }
 
-    private void ResetPlatforms()
-    {
-        for(int i = 0; i < _notPooledPlatforms.transform.childCount; i++)
-        {
-            _notPooledPlatforms.transform.GetChild(i).gameObject.SetActive(true);
-        }
-    }
-    */
 }

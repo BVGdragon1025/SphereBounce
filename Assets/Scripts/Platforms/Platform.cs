@@ -7,13 +7,28 @@ public abstract class Platform : MonoBehaviour
 {
     [SerializeField]
     protected float bounceForce;
+    protected Rigidbody playerRb;
+    protected Collider playerColl;
+    protected float playerHitLocation;
+    [SerializeField]
+    protected bool shouldMove;
+
     private Vector3 _startingPosition;
+
+    private void Start()
+    {
+        _startingPosition = transform.position;
+        playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+        playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.isGameStarted)
         {
-            SphereController.Instance.sphereRb.velocity = Vector3.zero;
+            playerRb.velocity = Vector3.zero;
+            playerHitLocation = -transform.localPosition.x;
+            Debug.Log($"Player hit on: {transform.position.x}");
             BounceSphere();
             if (!CompareTag("StartingPlatform"))
             {
@@ -30,27 +45,16 @@ public abstract class Platform : MonoBehaviour
             SphereController.Instance.isInAir = true;
     }
 
-    private void Start()
-    {
-        _startingPosition = transform.position;
-    }
-
     private void Update()
     {
-        if (!SphereController.Instance.isDead && GameManager.Instance.isGameStarted)
+        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted && shouldMove)
             transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
     }
-
-    private void OnDisable()
-    {
-        ResetPlatformPosition();
-    }
-
     public abstract void BounceSphere();
 
-    private void ResetPlatformPosition()
+    public void ResetPlatformPosition()
     {
-        _startingPosition = transform.position;
+        transform.position = _startingPosition;
     }
 
 }

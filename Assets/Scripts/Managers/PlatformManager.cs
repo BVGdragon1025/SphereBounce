@@ -12,6 +12,8 @@ public class PlatformManager : MonoBehaviour
     private GameObject _longPlatformPrefab;
     [SerializeField]
     private GameObject _doublePlatformPrefab;
+    [SerializeField]
+    private GameObject _speedPlatformPrefab;
 
     [Header("Platform Control Section")]
     [SerializeField]
@@ -20,6 +22,8 @@ public class PlatformManager : MonoBehaviour
     private float _spaceBetweenPlatforms;
     [SerializeField]
     private float _platformSpeed;
+    [SerializeField]
+    private List<string> _platformTags;
 
     public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
@@ -30,11 +34,13 @@ public class PlatformManager : MonoBehaviour
     public List<GameObject> normalPlatformsPool;
     public List<GameObject> longPlatformsPool;
     public List<GameObject> doublePlatformsPool;
+    public List<GameObject> speedPlatformsPool;
 
     //Other variables
     private PlatformPropabilityCounter _propabilityComponent;
     private float _defaultSpeed;
     public float DefaultSpeed { get { return _defaultSpeed;} }
+    public float CurrentPlatformSpeed { get { return _platformSpeed; } }
 
     private void Awake()
     {
@@ -46,7 +52,7 @@ public class PlatformManager : MonoBehaviour
         {
             Instance = this;
         }
-        
+
         _propabilityComponent = GetComponent<PlatformPropabilityCounter>();
 
     }
@@ -57,27 +63,32 @@ public class PlatformManager : MonoBehaviour
         normalPlatformsPool = new List<GameObject>();
         longPlatformsPool = new List<GameObject>();
         doublePlatformsPool = new List<GameObject>();
+        speedPlatformsPool = new List<GameObject>();
 
         SetObjectPool(_normalPlatformPrefab, normalPlatformsPool);
         SetObjectPool(_longPlatformPrefab, longPlatformsPool);
         SetObjectPool(_doublePlatformPrefab, doublePlatformsPool);
+        SetObjectPool(_speedPlatformPrefab, speedPlatformsPool);
 
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.Log($"{other.tag}");
-
-        if (other.CompareTag("Platform") || other.CompareTag("DoublePlatform"))
+        for(int i = 0; i < _platformTags.Count; i++)
         {
-            GameObject platform = GetPooledObject();
-
-            if(platform != null)
+            if (other.CompareTag(_platformTags[i]))
             {
-                Debug.Log("Platform is not null");
-                SpawnPlatform(platform, other.gameObject);
+                GameObject platform = GetPooledObject();
+
+                if (platform != null)
+                {
+                    Debug.Log("Platform is not null");
+                    SpawnPlatform(platform, other.gameObject);
+                }
             }
         }
+        
     }
 
     public GameObject GetPooledObject()
@@ -116,6 +127,8 @@ public class PlatformManager : MonoBehaviour
                 return longPlatformsPool;
             case 2:
                 return doublePlatformsPool;
+            case 3:
+                return speedPlatformsPool;
             default:
                 return null;
         }
@@ -135,6 +148,12 @@ public class PlatformManager : MonoBehaviour
             case "Platform":
                 platform.transform.position = new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, otherObjectPos.y, otherObjectPos.z);
                 break;
+            case "HighJumpPlatform":
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.5f), otherObjectPos.y, otherObjectPos.z);
+                break;
+            case "SpawnNext":
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 2.2f), otherObjectPos.y, otherObjectPos.z);
+                break;
             default:
                 Debug.Log("Non-platform object has exited the collider.");
                 break;
@@ -143,6 +162,33 @@ public class PlatformManager : MonoBehaviour
         platform.SetActive(true);
 
         Debug.Log($"{otherObjectPos}");
+    }
+
+    public void ResetAllPooledPlatforms()
+    {
+        for(int i = 0; i < normalPlatformsPool.Count; i++)
+        {
+            if(normalPlatformsPool[i].activeInHierarchy)
+                normalPlatformsPool[i].SetActive(false);
+        }
+
+        for(int i = 0; i < doublePlatformsPool.Count; i++)
+        {
+            if(doublePlatformsPool[i].activeInHierarchy)
+                doublePlatformsPool[i].SetActive(false);
+        }
+
+        for(int i = 0; i < speedPlatformsPool.Count; i++)
+        {
+            if(speedPlatformsPool[i].activeInHierarchy)
+                speedPlatformsPool[i].SetActive(false);
+        }
+
+        for(int i = 0; i < longPlatformsPool.Count; i++)
+        {
+            if(longPlatformsPool[i].activeInHierarchy)
+                longPlatformsPool[i].SetActive(false);
+        }
     }
 
 }

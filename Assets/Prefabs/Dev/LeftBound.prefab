@@ -58,4 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453728f39466c6f4d94750d6378a3e31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _platformCount: 0
+  _allowedTags:
+  - Platform
+  - StartingPlatform
+  - DoublePlatform
+  - SpawnNext
