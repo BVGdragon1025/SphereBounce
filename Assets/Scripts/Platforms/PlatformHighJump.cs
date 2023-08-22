@@ -24,7 +24,7 @@ public class PlatformHighJump : Platform
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            playerRb.constraints = RigidbodyConstraints.FreezePositionX;
+            playerRb.constraints = RigidbodyConstraints.None;
 
         }
     }
@@ -32,11 +32,11 @@ public class PlatformHighJump : Platform
     private IEnumerator FreezeInAir()
     {
         Debug.Log("Coroutine start: HighJump");
-        playerRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
+        playerRb.constraints = RigidbodyConstraints.FreezePositionY;
         playerRb.velocity = Vector3.zero;
 
         yield return new WaitForSeconds(_timeInAir);
-        playerRb.constraints = RigidbodyConstraints.FreezePositionX;
+        playerRb.constraints = RigidbodyConstraints.None;
 
         yield return new WaitForSeconds(0.2f);
         if (!SphereController.Instance.IsPlayerDead)

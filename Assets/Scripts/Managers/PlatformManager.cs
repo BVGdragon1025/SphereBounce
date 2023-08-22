@@ -152,7 +152,7 @@ public class PlatformManager : MonoBehaviour
                 platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.5f), otherObjectPos.y, otherObjectPos.z);
                 break;
             case "SpawnNext":
-                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.5f), otherObjectPos.y, otherObjectPos.z);
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 2.2f), otherObjectPos.y, otherObjectPos.z);
                 break;
             default:
                 Debug.Log("Non-platform object has exited the collider.");
