@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9d7ca6dd053214a86b15d2b53b0381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 8
+  bounceForce: 7
   shouldMove: 1
-  _startingPosition: {x: 0, y: 0, z: 0}
-  _timeInAir: 0
+  _timeInAir: 1
+  _maxHeight: 1

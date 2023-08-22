@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlatformSpeed : Platform
 {
-    [SerializeField, Tooltip("Speed multiplier by which platforms and background will be moving"), Range(0.1f, 3.0f)]
+    [SerializeField, Tooltip("Speed multiplier by which platforms and background will be moving"), Range(0.1f, 5.0f)]
     private float _speedMultiplier;
     [SerializeField, Tooltip("How long increased speed effect will last, 0 - no speed increase.")]
     private float _speedTimer;
