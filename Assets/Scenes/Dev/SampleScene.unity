@@ -170,6 +170,7 @@ MonoBehaviour:
   - {fileID: 902611254}
   - {fileID: 517262059}
   isGameStarted: 0
+  _startAmountToSpawn: 0
 --- !u!4 &14127799
 Transform:
   m_ObjectHideFlags: 0
@@ -4052,6 +4053,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4963222733896730412, guid: ace8bf144c4784149965afb0f33659c5,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963222733896730412, guid: ace8bf144c4784149965afb0f33659c5,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
       objectReference: {fileID: 0}
@@ -4325,6 +4331,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113135284856351943, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b,
+        type: 3}
+      propertyPath: _maxAmountToSpawn
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8113135284856351943, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b,
         type: 3}

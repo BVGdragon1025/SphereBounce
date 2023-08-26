@@ -11,10 +11,23 @@ public class PlatformPropabilityCounter : MonoBehaviour
     [SerializeField, Tooltip("Winner propability value decrease, in float. This value will be divided in half and added to losers."), Range(0.05f, 0.25f)]
     private float _propabilityDecrease;
 
+    private float _currentPropability;
+    private PlatformManager _manager;
+    //Number of platforms in one section
+    [SerializeField]
+    private int _maxAmountToSpawn;
+
+
+    private void Start()
+    {
+        _manager = GetComponent<PlatformManager>();
+        _maxAmountToSpawn = GameManager.Instance.StartAmountToSpawn;
+
+    }
 
     public int CheckPropability()
     {
-        float randomFloat = Random.Range(0.1f, 1.0f);
+        float randomFloat = ReturnCurrentChance();
 
         Debug.Log($"Random number is: {randomFloat}");
 
@@ -57,10 +70,23 @@ public class PlatformPropabilityCounter : MonoBehaviour
             return 3;
         }
 
-         
-        
         return -1;
         
+    }
+
+    float ReturnCurrentChance()
+    {
+        if(_manager.CurrentSpawnAmount >= _maxAmountToSpawn)
+        {
+            _manager.CurrentSpawnAmount = 0;
+            _maxAmountToSpawn = Random.Range(1, (_manager.MaxPoolCount / 2) + 1);
+            float randomFloat = Random.Range(0.1f, 1.0f);
+            _currentPropability = randomFloat;
+            return _currentPropability;
+        }
+        
+        return _currentPropability;
+
     }
 
 

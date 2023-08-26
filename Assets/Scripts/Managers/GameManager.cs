@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Variables")]
     public bool isGameStarted = false;
+    [SerializeField]
+    private int _startAmountToSpawn;
+    public int StartAmountToSpawn { get { return _startAmountToSpawn; } }
     private SphereStats _sphereStats;
 
     public static GameManager Instance;
@@ -59,12 +62,16 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
+        _startAmountToSpawn = _notPooled.Length;
+
     }
 
     private void Start()
     {
+        
         _sphereStats = GameObject.FindGameObjectWithTag("Player").GetComponent<SphereStats>();
         _sphereStats.LoadData();
+        PlatformManager.Instance.CurrentSpawnAmount = _startAmountToSpawn;
         ShowMenu();
 
     }
@@ -153,6 +160,7 @@ public class GameManager : MonoBehaviour
 
         SphereController.Instance.ResetPlayerPosition();
         SphereController.Instance.MarkAsDead(false);
+        PlatformManager.Instance.CurrentSpawnAmount = _startAmountToSpawn;
 
         isGameStarted = true;
        

@@ -19,6 +19,8 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private int _maxAmountToPool;
     [SerializeField]
+    private int _currentSpawnAmount;
+    [SerializeField]
     private float _spaceBetweenPlatforms;
     [SerializeField]
     private float _platformSpeed;
@@ -28,6 +30,7 @@ public class PlatformManager : MonoBehaviour
     public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
     public int MaxPoolCount { get { return _maxAmountToPool; }}
+    public int CurrentSpawnAmount { get { return _currentSpawnAmount; } set { _currentSpawnAmount = value; } }
     public static PlatformManager Instance;
 
     [Header("Platform Pools Section")]
@@ -85,6 +88,7 @@ public class PlatformManager : MonoBehaviour
                 {
                     Debug.Log("Platform is not null");
                     SpawnPlatform(platform, other.gameObject);
+                    _currentSpawnAmount++;
                 }
             }
         }
