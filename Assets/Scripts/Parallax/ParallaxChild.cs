@@ -33,6 +33,7 @@ public class ParallaxChild : MonoBehaviour
     {
         if (GameManager.Instance.isGameStarted)
         {
+            _scrollSpeed = GetComponentInParent<ParallaxParent>().defaultParallaxSpeed;
             ScrollTexture();
             ResetTexture();
         }

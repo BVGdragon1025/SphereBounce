@@ -147,7 +147,7 @@ public class PlatformManager : MonoBehaviour
         switch (otherPlatform.tag)
         {
             case "DoublePlatform":
-                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 2), otherObjectPos.y, otherObjectPos.z);
+                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.8f), otherObjectPos.y, otherObjectPos.z);
                 break;
             case "Platform":
                 platform.transform.position = new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, otherObjectPos.y, otherObjectPos.z);
