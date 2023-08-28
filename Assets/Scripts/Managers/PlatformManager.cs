@@ -18,6 +18,9 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private List<string> _platformTags;
 
+    [Header("Platform modifiers")]
+    public bool isSpecialSection;
+
     public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
     public int CurrentSpawnAmount { get { return _currentSpawnAmount; } set { _currentSpawnAmount = value; } }
@@ -26,6 +29,7 @@ public class PlatformManager : MonoBehaviour
 
     //Other variables
     private PlatformPoolsComponent _poolsComponent;
+    private PlatformPropabilityCounter _propabilityCounter;
     private float _defaultSpeed;
     public float DefaultSpeed { get { return _defaultSpeed;} }
     public float CurrentPlatformSpeed { get { return _platformSpeed; } }
@@ -42,6 +46,8 @@ public class PlatformManager : MonoBehaviour
         }
 
         _poolsComponent = GetComponent<PlatformPoolsComponent>();
+        _propabilityCounter = GetComponent<PlatformPropabilityCounter>();
+        isSpecialSection = false;
 
     }
 
@@ -60,13 +66,26 @@ public class PlatformManager : MonoBehaviour
             if (other.CompareTag(_platformTags[i]))
             {
                 GameObject platform = _poolsComponent.GetPooledObject();
+                GameObject specialPlatform = _poolsComponent.GetPooledObjectSpecial();
 
                 if (platform != null)
                 {
                     Debug.Log("Platform is not null");
-                    SpawnPlatform(platform, other.gameObject);
+                    if (specialPlatform != null && (!isSpecialSection || (isSpecialSection && _currentSpawnAmount == (_propabilityCounter.MaxAmountToSpawn - 1))))
+                    {
+                        Debug.Log("Special platform is spawned!");
+                        isSpecialSection = true;
+                        if (_propabilityCounter.MaxAmountToSpawn < 4)
+                            _propabilityCounter.MaxAmountToSpawn = 4;
+                        SpawnPlatform(specialPlatform, other.gameObject);
+                    }
+                    else
+                    {
+                        SpawnPlatform(platform, other.gameObject);
+                    }
                     _currentSpawnAmount++;
                     _allSpawnedAmount++;
+
                 }
             }
         }
@@ -85,17 +104,27 @@ public class PlatformManager : MonoBehaviour
             case "DoublePlatform":
                 SetSpawnPosition(platform, otherObjectPos, 1.8f);
                 break;
-            case "Platform":
-                SetSpawnPosition(platform, otherObjectPos);
-                break;
             case "HighJumpPlatform":
                 SetSpawnPosition(platform, otherObjectPos, 1.5f);
                 break;
             case "SpawnNext":
                 SetSpawnPosition(platform, otherObjectPos, 2.2f);
                 break;
-            default:
+            case "GravityPlatform":
+                if (GameManager.Instance.isGravityReversed)
+                {
+                    platform.transform.SetPositionAndRotation(new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, -otherObjectPos.y * 2, otherObjectPos.z), Quaternion.Euler(270.0f, 0, 0));
+                }
+                else
+                {
+                    platform.transform.SetPositionAndRotation(new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, -otherObjectPos.y / 2, otherObjectPos.z), Quaternion.Euler(90.0f, 0, 0));
+                }
+                break;
+            case "Untagged":
                 Debug.Log("Non-platform object has exited the collider.");
+                break;
+            default:
+                SetSpawnPosition(platform, otherObjectPos);
                 break;
         }
 
@@ -106,12 +135,28 @@ public class PlatformManager : MonoBehaviour
 
     private void SetSpawnPosition(GameObject platform, Vector3 spawnPosition)
     {
-        platform.transform.position = new Vector3(spawnPosition.x + _spaceBetweenPlatforms, spawnPosition.y, spawnPosition.z);
+        if (GameManager.Instance.isGravityReversed)
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + _spaceBetweenPlatforms, spawnPosition.y, spawnPosition.z), Quaternion.Euler(270.0f, 0, 0));
+        }
+        else
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + _spaceBetweenPlatforms, spawnPosition.y, spawnPosition.z), Quaternion.Euler(90.0f, 0f, 0f));
+
+        }
+        
     }
 
     private void SetSpawnPosition(GameObject platform, Vector3 spawnPosition, float distanceMod)
     {
-        platform.transform.position = new Vector3(spawnPosition.x, spawnPosition.y + (_spaceBetweenPlatforms * distanceMod) , spawnPosition.z);
+        if (GameManager.Instance.isGravityReversed)
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + (_spaceBetweenPlatforms * distanceMod), spawnPosition.y, spawnPosition.z), Quaternion.Euler(270.0f, 0, 0));
+        }
+        else
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + (_spaceBetweenPlatforms * distanceMod), spawnPosition.y, spawnPosition.z), Quaternion.Euler(90.0f, 0, 0));
+        }
     }
 
     public void ResetAllPooledPlatforms()

@@ -8,6 +8,7 @@ public class SphereController : MonoBehaviour
     [SerializeField, Tooltip("Amount of force impulse the sphere gets on tap or click")]
     private float _downForce;
     public bool isInAir;
+    public bool touchedAntiGravity;
 
     public static SphereController Instance { get; set; }
     [HideInInspector]
@@ -28,6 +29,7 @@ public class SphereController : MonoBehaviour
         }
 
         _isDead = false;
+        touchedAntiGravity = false;
         
     }
 
@@ -50,7 +52,14 @@ public class SphereController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             if(isInAir && !_isDead && GameManager.Instance.isGameStarted)
-                sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
+            {
+                if (touchedAntiGravity)
+                    sphereRb.AddForce(Vector3.up * _downForce, ForceMode.Impulse);
+                else
+                    sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
+            }
+            
+
         }
     }
 

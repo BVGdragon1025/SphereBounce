@@ -170,6 +170,8 @@ MonoBehaviour:
   - {fileID: 902611254}
   - {fileID: 517262059}
   isGameStarted: 0
+  isGravityReversed: 0
+  arePlatformsSticky: 0
   _startAmountToSpawn: 0
 --- !u!4 &14127799
 Transform:
@@ -4355,6 +4357,10 @@ PrefabInstance:
     - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
       propertyPath: _normalPlatformChance
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
+      propertyPath: _specialPlatformChance
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8113135284856351940, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b,
         type: 3}

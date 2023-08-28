@@ -6,18 +6,17 @@ public class PlatformPropabilityCounter : MonoBehaviour
 {
     [SerializeField, Tooltip("List of propabilities. Should have the same amount of elements, as the amount of platform types."), Range(0.1f, 1.0f)]
     private List<float> _platformChance = new();
-
-    /*
-    [Header("Propability Tweaks")]
-    [SerializeField, Tooltip("Propability value decrease for winner, in float. This value will be divided in half and added to losers."), Range(0.05f, 0.25f)]
-    private float _propabilityDecrease;
-    */
+    [SerializeField, Tooltip("Special platform propability"), Range(0.0f, 1.0f)]
+    private float _specialPlatformChance;
 
     private float _currentPropability;
+    private float _currentSpecialPropability;
+    private int _currentSpecialPlatform;
     private PlatformManager _manager;
     //Number of platforms in one section
     [SerializeField]
     private int _maxAmountToSpawn;
+    public int MaxAmountToSpawn { get { return _maxAmountToSpawn; } set { _maxAmountToSpawn = value; } }
     private PlatformPoolsComponent _poolsComponent;
 
 
@@ -59,13 +58,45 @@ public class PlatformPropabilityCounter : MonoBehaviour
         
     }
 
+    public int CheckPropabilitySpecial()
+    {
+        float randomFloat = ReturnCurrentChanceSpecial();
+
+        if(randomFloat >= (1 - _specialPlatformChance) && randomFloat <= 1)
+        {
+            int randomPlatform = ReturnCurrentSpecialPlatform();
+            return randomPlatform;
+        }
+
+        return -1;
+
+    }
+
+    float ReturnCurrentChanceSpecial()
+    {
+        if(_manager.CurrentSpawnAmount == 0)
+        {
+            float randomFloat = Random.value;
+            _currentSpecialPropability = randomFloat;
+            return _currentSpecialPropability;
+        }
+        return _currentSpecialPropability;
+    }
+
+    int ReturnCurrentSpecialPlatform()
+    {
+        int randomPlatform = Random.Range(0, 2);
+        _currentSpecialPlatform = randomPlatform;
+        return _currentSpecialPlatform;
+    }
+
     float ReturnCurrentChance()
     {
         if(_manager.CurrentSpawnAmount >= _maxAmountToSpawn)
         {
             _manager.CurrentSpawnAmount = 0;
             _maxAmountToSpawn = Random.Range(1, (_poolsComponent.MaxPoolCount / 2) + 1);
-            float randomFloat = Random.Range(0.1f, 1.0f);
+            float randomFloat = Random.value;
             _currentPropability = randomFloat;
             return _currentPropability;
         }
@@ -73,53 +104,5 @@ public class PlatformPropabilityCounter : MonoBehaviour
         return _currentPropability;
 
     }
-
-    /*
-    void ChangePropability(float randomFloat)
-    {
-        if (0 < randomFloat && randomFloat <= (1 - _platformChance[0]))
-        {
-            Debug.Log("Now spawning: Normal Platform");
-
-            _platformChance[0] = Mathf.Clamp(_platformChance[0] - _propabilityDecrease, 0.1f, 1.0f);
-            _platformChance[2] = Mathf.Clamp(_platformChance[2] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[1] = Mathf.Clamp(_platformChance[1] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[3] = Mathf.Clamp(_platformChance[3] + (_propabilityDecrease / 2), 0f, 1.0f);
-
-        }
-
-        if ((1 - _platformChance[0]) < randomFloat && randomFloat <= (1 - _platformChance[1]))
-        {
-            Debug.Log("Now spawning: Long Platform");
-
-            _platformChance[1] = Mathf.Clamp(_platformChance[1] - _propabilityDecrease, 0.1f, 1.0f);
-            _platformChance[0] = Mathf.Clamp(_platformChance[0] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[2] = Mathf.Clamp(_platformChance[2] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[3] = Mathf.Clamp(_platformChance[3] + (_propabilityDecrease / 2), 0f, 1.0f);
-
-        }
-
-        if ((1 - _platformChance[1]) < randomFloat && randomFloat <= (1 - _platformChance[2]))
-        {
-            Debug.Log("Now spawning: High Jump Platform");
-
-            _platformChance[2] = Mathf.Clamp(_platformChance[2] - _propabilityDecrease, 0.1f, 1.0f);
-            _platformChance[0] = Mathf.Clamp(_platformChance[0] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[1] = Mathf.Clamp(_platformChance[1] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[3] = Mathf.Clamp(_platformChance[3] + (_propabilityDecrease / 2), 0f, 1.0f);
-
-        }
-
-        if (1 - _platformChance[2] < randomFloat && (randomFloat <= (1 - _platformChance[3]) || randomFloat <= 1.0f))
-        {
-            Debug.Log("Now spawning: Speed Platform");
-            _platformChance[3] = Mathf.Clamp(_platformChance[3] - _propabilityDecrease, 0.1f, 1.0f);
-            _platformChance[0] = Mathf.Clamp(_platformChance[0] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[1] = Mathf.Clamp(_platformChance[1] + (_propabilityDecrease / 2), 0f, 1.0f);
-            _platformChance[2] = Mathf.Clamp(_platformChance[2] + (_propabilityDecrease / 2), 0f, 1.0f);
-
-        }
-    }
-    */
 
 }
