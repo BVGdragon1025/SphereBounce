@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8113135284856351942}
   - component: {fileID: 8113135284856351943}
+  - component: {fileID: 7170432776881518671}
   - component: {fileID: 34259149}
   - component: {fileID: 1602837586}
   m_Layer: 0
@@ -48,13 +49,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _normalPlatformPrefab: {fileID: 7011426531578910211, guid: 32a5abec09eff5642affda2d317b74b3,
     type: 3}
-  _longPlatformPrefab: {fileID: 6282009138094873969, guid: 3f6456fdb1340e7469f9f5810ffe6675,
+  _longPlatformPrefab: {fileID: 6282009138094873969, guid: 863b0efd5fae0664e881f6f003bcbc61,
     type: 3}
   _doublePlatformPrefab: {fileID: 9001798881811153757, guid: 88f2b43d8cd8a8a4086177cb5c2066f4,
     type: 3}
   _speedPlatformPrefab: {fileID: 9001798881811153757, guid: 3acd85eb993ffb54a847c20905415fd6,
     type: 3}
   _maxAmountToPool: 10
+  _currentSpawnAmount: 0
   _spaceBetweenPlatforms: 2.5
   _platformSpeed: 2.5
   _platformTags:
@@ -66,6 +68,31 @@ MonoBehaviour:
   longPlatformsPool: []
   doublePlatformsPool: []
   speedPlatformsPool: []
+--- !u!114 &7170432776881518671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8113135284856351940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2145b7a65d3c349a035282e7529a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normalPlatformPrefab: {fileID: 7011426531578910211, guid: 32a5abec09eff5642affda2d317b74b3,
+    type: 3}
+  _longPlatformPrefab: {fileID: 6282009138094873969, guid: 863b0efd5fae0664e881f6f003bcbc61,
+    type: 3}
+  _doublePlatformPrefab: {fileID: 9001798881811153757, guid: 88f2b43d8cd8a8a4086177cb5c2066f4,
+    type: 3}
+  _speedPlatformPrefab: {fileID: 9001798881811153757, guid: 3acd85eb993ffb54a847c20905415fd6,
+    type: 3}
+  normalPlatformsPool: []
+  longPlatformsPool: []
+  doublePlatformsPool: []
+  speedPlatformsPool: []
+  _maxAmountToPool: 10
 --- !u!114 &34259149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +111,7 @@ MonoBehaviour:
   - 0.15
   - 0.3
   _propabilityDecrease: 0.1
+  _maxAmountToSpawn: 0
 --- !u!65 &1602837586
 BoxCollider:
   m_ObjectHideFlags: 0

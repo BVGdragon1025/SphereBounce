@@ -4421,11 +4421,5 @@ PrefabInstance:
       propertyPath: _maxAmountToSpawn
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 8113135284856351943, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b,
-        type: 3}
-      propertyPath: _longPlatformPrefab
-      value: 
-      objectReference: {fileID: 6282009138094873969, guid: 863b0efd5fae0664e881f6f003bcbc61,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
