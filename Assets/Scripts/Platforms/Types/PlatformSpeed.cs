@@ -11,20 +11,26 @@ public class PlatformSpeed : Platform
 
     public override void BounceSphere()
     {
-        ResetPlatformSpeed();
-        playerRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+        if(speedPlatformActive)
+            ResetPlatformSpeed();
+        
+        if (SphereController.Instance.touchedAntiGravity)
+            playerRb.AddForce(Vector3.down * bounceForce, ForceMode.Impulse);
+        else
+            playerRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+        
         GameManager.Instance.CurrentCombo += 2;
         StartCoroutine(ChangePlatformsSpeed());
     }
 
     private IEnumerator ChangePlatformsSpeed()
     {
-        Debug.Log("Coroutine start!");
-        PlatformManager.Instance.PlatformSpeed *= 2.0f;
+        speedPlatformActive = true;
+        PlatformManager.Instance.PlatformSpeed *= _speedMultiplier;
         yield return new WaitForSeconds(_speedTimer);
 
-        PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
-        Debug.Log("Coroutine end.");
+        PlatformManager.Instance.PlatformSpeed /= _speedMultiplier;
+        speedPlatformActive = false;
         yield return new WaitForSeconds(_speedTimer + 0.2f);
 
         if(!SphereController.Instance.IsPlayerDead) 
@@ -34,6 +40,6 @@ public class PlatformSpeed : Platform
     private void ResetPlatformSpeed()
     {
         StopCoroutine(ChangePlatformsSpeed());
-        PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
+        PlatformManager.Instance.PlatformSpeed /= _speedMultiplier;
     }
 }

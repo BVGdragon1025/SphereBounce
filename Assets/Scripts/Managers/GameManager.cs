@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Variables")]
     public bool isGameStarted = false;
+    public bool isGravityReversed = false;
+    [SerializeField]
+    private int _startAmountToSpawn;
+    public int StartAmountToSpawn { get { return _startAmountToSpawn; } }
     private SphereStats _sphereStats;
 
     public static GameManager Instance;
@@ -59,12 +63,16 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
+        _startAmountToSpawn = _notPooled.Length;
+
     }
 
     private void Start()
     {
+        
         _sphereStats = GameObject.FindGameObjectWithTag("Player").GetComponent<SphereStats>();
         _sphereStats.LoadData();
+        PlatformManager.Instance.CurrentSpawnAmount = _startAmountToSpawn;
         ShowMenu();
 
     }
@@ -151,8 +159,15 @@ public class GameManager : MonoBehaviour
                 _notPooled[i].SetActive(true);
         }
 
+        PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
         SphereController.Instance.ResetPlayerPosition();
         SphereController.Instance.MarkAsDead(false);
+        SphereController.Instance.touchedAntiGravity = false;
+        PlatformManager.Instance.CurrentSpawnAmount = _startAmountToSpawn;
+        PlatformManager.Instance.isSpecialSection = false;
+        PlatformManager.Instance.SetOverallSpawnAmount = 0;
+        isGravityReversed = false;
+        Physics.gravity = new Vector3(0, -9.81f, 0);
 
         isGameStarted = true;
        

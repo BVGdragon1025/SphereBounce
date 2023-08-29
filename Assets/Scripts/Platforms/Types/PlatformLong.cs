@@ -53,12 +53,20 @@ public class PlatformLong : Platform
         if(amountOfCollisions > 1)
         {
             var correctForce = Mathf.Min(bounceForce, bounceForce * _bounceMultiplier);
-            playerRb.AddForce(Vector3.up * correctForce, ForceMode.Impulse);
+
+            if (SphereController.Instance.touchedAntiGravity)
+                playerRb.AddForce(Vector3.down * correctForce, ForceMode.Impulse);
+            else
+                playerRb.AddForce(Vector3.up * correctForce, ForceMode.Impulse);
+
             GameManager.Instance.CurrentCombo = 1;
         }
         else
         {
-            playerRb.AddForce(Vector3.up * _childrenBounceForce[currentCollision], ForceMode.Impulse);
+            if (SphereController.Instance.touchedAntiGravity)
+                playerRb.AddForce(Vector3.down * _childrenBounceForce[currentCollision], ForceMode.Impulse);
+            else
+                playerRb.AddForce(Vector3.up * _childrenBounceForce[currentCollision], ForceMode.Impulse);
 
             if (_children[currentCollision].CompareTag("GoodPlatform"))
                 GameManager.Instance.CurrentCombo += 1;

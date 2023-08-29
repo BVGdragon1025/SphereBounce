@@ -2,45 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlatformManager))]
+[RequireComponent(typeof(PlatformPropabilityCounter))]
+[RequireComponent(typeof(PlatformPoolsComponent))]
 public class PlatformManager : MonoBehaviour
 {
-    [Header("Platform Prefabs Section")]
-    [SerializeField]
-    private GameObject _normalPlatformPrefab;
-    [SerializeField]
-    private GameObject _longPlatformPrefab;
-    [SerializeField]
-    private GameObject _doublePlatformPrefab;
-    [SerializeField]
-    private GameObject _speedPlatformPrefab;
-
     [Header("Platform Control Section")]
     [SerializeField]
-    private int _maxAmountToPool;
+    private int _currentSpawnAmount;
+    [SerializeField]
+    private int _allSpawnedAmount;
     [SerializeField]
     private float _spaceBetweenPlatforms;
     [SerializeField]
     private float _platformSpeed;
+    private float _platformSpeedMod;
     [SerializeField]
     private List<string> _platformTags;
 
+    [Header("Platform modifiers")]
+    public bool isSpecialSection;
+    private Vector3 _defaultGravity;
+    public Vector3 DefaultGravity { get { return _defaultGravity; } }
+    [SerializeField]
+    private float _speedIncrease;
+
     public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
-    public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
-    public int MaxPoolCount { get { return _maxAmountToPool; }}
+    public float PlatformSpeedMod { get { return _platformSpeedMod; } }
+    public int CurrentSpawnAmount { get { return _currentSpawnAmount; } set { _currentSpawnAmount = value; } }
+    public int OverallSpawnAmount { get { return _allSpawnedAmount; } }
+    public int SetOverallSpawnAmount { set {  _allSpawnedAmount = value; } }
     public static PlatformManager Instance;
 
-    [Header("Platform Pools Section")]
-    public List<GameObject> normalPlatformsPool;
-    public List<GameObject> longPlatformsPool;
-    public List<GameObject> doublePlatformsPool;
-    public List<GameObject> speedPlatformsPool;
-
     //Other variables
-    private PlatformPropabilityCounter _propabilityComponent;
+    private PlatformPoolsComponent _poolsComponent;
+    private PlatformPropabilityCounter _propabilityCounter;
     private float _defaultSpeed;
     public float DefaultSpeed { get { return _defaultSpeed;} }
-    public float CurrentPlatformSpeed { get { return _platformSpeed; } }
 
     private void Awake()
     {
@@ -53,22 +50,17 @@ public class PlatformManager : MonoBehaviour
             Instance = this;
         }
 
-        _propabilityComponent = GetComponent<PlatformPropabilityCounter>();
+        _poolsComponent = GetComponent<PlatformPoolsComponent>();
+        _propabilityCounter = GetComponent<PlatformPropabilityCounter>();
+        _defaultGravity = Physics.gravity;
+        isSpecialSection = false;
 
     }
 
     void Start()
     {
         _defaultSpeed = _platformSpeed;
-        normalPlatformsPool = new List<GameObject>();
-        longPlatformsPool = new List<GameObject>();
-        doublePlatformsPool = new List<GameObject>();
-        speedPlatformsPool = new List<GameObject>();
-
-        SetObjectPool(_normalPlatformPrefab, normalPlatformsPool);
-        SetObjectPool(_longPlatformPrefab, longPlatformsPool);
-        SetObjectPool(_doublePlatformPrefab, doublePlatformsPool);
-        SetObjectPool(_speedPlatformPrefab, speedPlatformsPool);
+        _poolsComponent.SetupPools();
 
     }
 
@@ -79,60 +71,33 @@ public class PlatformManager : MonoBehaviour
         {
             if (other.CompareTag(_platformTags[i]))
             {
-                GameObject platform = GetPooledObject();
+                GameObject platform = _poolsComponent.GetPooledObject();
+                GameObject specialPlatform = _poolsComponent.GetPooledObjectSpecial();
 
                 if (platform != null)
                 {
                     Debug.Log("Platform is not null");
-                    SpawnPlatform(platform, other.gameObject);
+                    if (specialPlatform != null && (!isSpecialSection || (isSpecialSection && _currentSpawnAmount == (_propabilityCounter.MaxAmountToSpawn - 1))))
+                    {
+                        Debug.Log("Special platform is spawned!");
+                        SpawnPlatform(specialPlatform, other.gameObject);
+                        isSpecialSection = true;
+                    }
+                    else
+                    {
+                        SpawnPlatform(platform, other.gameObject);
+                    }
+                    _currentSpawnAmount++;
+                    _allSpawnedAmount++;
+
+                    IncreasePlatformSpeed(20, _speedIncrease);
+
                 }
             }
         }
         
     }
 
-    public GameObject GetPooledObject()
-    {
-        var winningPool = GetWinnerPool();
-
-        for(int i = 0; i <= _maxAmountToPool; i++)
-        {
-            if (!winningPool[i].activeInHierarchy)
-            {
-                return winningPool[i];
-            }
-        }
-        return null;
-    }
-
-    private void SetObjectPool(GameObject objectPrefab, List<GameObject> objectPool)
-    {
-        GameObject tempObject;
-
-        for(int i = 0; i < _maxAmountToPool; i++)
-        {
-            tempObject = Instantiate(objectPrefab);
-            tempObject.SetActive(false);
-            objectPool.Add(tempObject);
-        }
-    }
-
-    private List<GameObject> GetWinnerPool()
-    {
-        switch (_propabilityComponent.CheckPropability())
-        {
-            case 0:
-                return normalPlatformsPool;
-            case 1:
-                return longPlatformsPool;
-            case 2:
-                return doublePlatformsPool;
-            case 3:
-                return speedPlatformsPool;
-            default:
-                return null;
-        }
-    }
 
     private void SpawnPlatform(GameObject platform, GameObject otherPlatform)
     {
@@ -143,19 +108,30 @@ public class PlatformManager : MonoBehaviour
         switch (otherPlatform.tag)
         {
             case "DoublePlatform":
-                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 2), otherObjectPos.y, otherObjectPos.z);
-                break;
-            case "Platform":
-                platform.transform.position = new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, otherObjectPos.y, otherObjectPos.z);
+                SetSpawnPosition(platform, otherObjectPos, 1.8f);
                 break;
             case "HighJumpPlatform":
-                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 1.5f), otherObjectPos.y, otherObjectPos.z);
+                SetSpawnPosition(platform, otherObjectPos, 1.5f);
                 break;
             case "SpawnNext":
-                platform.transform.position = new Vector3(otherObjectPos.x + (_spaceBetweenPlatforms * 2.2f), otherObjectPos.y, otherObjectPos.z);
+                SetSpawnPosition(platform, otherObjectPos, 2.2f);
+                break;
+            case "GravityPlatform":
+                if (GameManager.Instance.isGravityReversed)
+                {
+                    platform.transform.SetPositionAndRotation(new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, -otherObjectPos.y * 2, otherObjectPos.z), Quaternion.Euler(270.0f, 0, 0));
+                }
+                else
+                {
+                    platform.transform.SetPositionAndRotation(new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, -otherObjectPos.y / 2, otherObjectPos.z), Quaternion.Euler(90.0f, 0, 0));
+                    isSpecialSection = false;
+                }
+                break;
+            case "Untagged":
+                Debug.Log("Non-platform object has exited the collider.");
                 break;
             default:
-                Debug.Log("Non-platform object has exited the collider.");
+                SetSpawnPosition(platform, otherObjectPos);
                 break;
         }
 
@@ -164,31 +140,45 @@ public class PlatformManager : MonoBehaviour
         Debug.Log($"{otherObjectPos}");
     }
 
+    private void IncreasePlatformSpeed(int platformCount, float modifier)
+    {
+        _platformSpeedMod = _platformSpeed;
+        if (_allSpawnedAmount % platformCount == 0)
+        {
+            _platformSpeed += modifier;
+            _platformSpeedMod = _platformSpeed;
+        }
+    }
+
+    private void SetSpawnPosition(GameObject platform, Vector3 spawnPosition)
+    {
+        if (GameManager.Instance.isGravityReversed)
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + _spaceBetweenPlatforms, spawnPosition.y, spawnPosition.z), Quaternion.Euler(270.0f, 0, 0));
+        }
+        else
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + _spaceBetweenPlatforms, spawnPosition.y, spawnPosition.z), Quaternion.Euler(90.0f, 0f, 0f));
+
+        }
+        
+    }
+
+    private void SetSpawnPosition(GameObject platform, Vector3 spawnPosition, float distanceMod)
+    {
+        if (GameManager.Instance.isGravityReversed)
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + (_spaceBetweenPlatforms * distanceMod), spawnPosition.y, spawnPosition.z), Quaternion.Euler(270.0f, 0, 0));
+        }
+        else
+        {
+            platform.transform.SetPositionAndRotation(new Vector3(spawnPosition.x + (_spaceBetweenPlatforms * distanceMod), spawnPosition.y, spawnPosition.z), Quaternion.Euler(90.0f, 0, 0));
+        }
+    }
+
     public void ResetAllPooledPlatforms()
     {
-        for(int i = 0; i < normalPlatformsPool.Count; i++)
-        {
-            if(normalPlatformsPool[i].activeInHierarchy)
-                normalPlatformsPool[i].SetActive(false);
-        }
-
-        for(int i = 0; i < doublePlatformsPool.Count; i++)
-        {
-            if(doublePlatformsPool[i].activeInHierarchy)
-                doublePlatformsPool[i].SetActive(false);
-        }
-
-        for(int i = 0; i < speedPlatformsPool.Count; i++)
-        {
-            if(speedPlatformsPool[i].activeInHierarchy)
-                speedPlatformsPool[i].SetActive(false);
-        }
-
-        for(int i = 0; i < longPlatformsPool.Count; i++)
-        {
-            if(longPlatformsPool[i].activeInHierarchy)
-                longPlatformsPool[i].SetActive(false);
-        }
+        _poolsComponent.ResetAllPooledPlatforms();
     }
 
 }

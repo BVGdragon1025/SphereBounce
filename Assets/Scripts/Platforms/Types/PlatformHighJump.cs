@@ -12,14 +12,17 @@ public class PlatformHighJump : Platform
     public override void BounceSphere()
     {
         ResetFreeze();
-        playerRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+        if (SphereController.Instance.touchedAntiGravity)
+            playerRb.AddForce(Vector3.down * bounceForce, ForceMode.Impulse);
+        else
+            playerRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
         GameManager.Instance.CurrentCombo += 1;
         StartCoroutine(PrepareToFreeze());
     }
 
     private void Update()
     {
-        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted && shouldMove)
+        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted)
             transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))

@@ -7,7 +7,7 @@ public class ParallaxChild : MonoBehaviour
 {
     [SerializeField, Tooltip("Multiplier of default scroling speed. 0 = No movement, 1 = Default scrolling speed")]
     private float _scrollSpeedMultiplier;
-    [SerializeField, Tooltip("Should the sprite move left. True = Sprites move to the left, False = Sprite moves to the right")]
+    [SerializeField, Tooltip("Should the sprite move left. True = Sprite moves to the left, False = Sprite moves to the right")]
     private bool _shouldScrollLeft;
 
     private float _singleTextureWidth;
@@ -33,6 +33,7 @@ public class ParallaxChild : MonoBehaviour
     {
         if (GameManager.Instance.isGameStarted)
         {
+            _scrollSpeed = GetComponentInParent<ParallaxParent>().defaultParallaxSpeed;
             ScrollTexture();
             ResetTexture();
         }

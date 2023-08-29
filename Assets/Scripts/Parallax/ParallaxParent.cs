@@ -12,6 +12,11 @@ public class ParallaxParent : MonoBehaviour
     void Awake()
     {
         _manager = GameObject.FindGameObjectWithTag("PlatformManager").GetComponent<PlatformManager>();
-        defaultParallaxSpeed = _manager.CurrentPlatformSpeed;
+        defaultParallaxSpeed = _manager.PlatformSpeed;
+    }
+
+    private void Update()
+    {
+        defaultParallaxSpeed = _manager.PlatformSpeed;
     }
 }
