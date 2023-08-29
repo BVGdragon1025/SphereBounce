@@ -22,7 +22,7 @@ public class PlatformHighJump : Platform
 
     private void Update()
     {
-        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted && shouldMove)
+        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted)
             transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))

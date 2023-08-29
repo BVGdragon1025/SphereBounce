@@ -20,11 +20,14 @@ public class PlatformManager : MonoBehaviour
 
     [Header("Platform modifiers")]
     public bool isSpecialSection;
+    private Vector3 _defaultGravity;
+    public Vector3 DefaultGravity { get { return _defaultGravity; } }
 
     public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
     public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
     public int CurrentSpawnAmount { get { return _currentSpawnAmount; } set { _currentSpawnAmount = value; } }
     public int OverallSpawnAmount { get { return _allSpawnedAmount; } }
+    public int SetOverallSpawnAmount { set {  _allSpawnedAmount = value; } }
     public static PlatformManager Instance;
 
     //Other variables
@@ -47,6 +50,7 @@ public class PlatformManager : MonoBehaviour
 
         _poolsComponent = GetComponent<PlatformPoolsComponent>();
         _propabilityCounter = GetComponent<PlatformPropabilityCounter>();
+        _defaultGravity = Physics.gravity;
         isSpecialSection = false;
 
     }
@@ -74,10 +78,12 @@ public class PlatformManager : MonoBehaviour
                     if (specialPlatform != null && (!isSpecialSection || (isSpecialSection && _currentSpawnAmount == (_propabilityCounter.MaxAmountToSpawn - 1))))
                     {
                         Debug.Log("Special platform is spawned!");
-                        isSpecialSection = true;
+                        /*
                         if (_propabilityCounter.MaxAmountToSpawn < 4)
                             _propabilityCounter.MaxAmountToSpawn = 4;
+                        */
                         SpawnPlatform(specialPlatform, other.gameObject);
+                        isSpecialSection = true;
                     }
                     else
                     {
@@ -118,6 +124,7 @@ public class PlatformManager : MonoBehaviour
                 else
                 {
                     platform.transform.SetPositionAndRotation(new Vector3(otherObjectPos.x + _spaceBetweenPlatforms, -otherObjectPos.y / 2, otherObjectPos.z), Quaternion.Euler(90.0f, 0, 0));
+                    isSpecialSection = false;
                 }
                 break;
             case "Untagged":

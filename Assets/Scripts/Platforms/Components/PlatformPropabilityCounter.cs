@@ -8,6 +8,8 @@ public class PlatformPropabilityCounter : MonoBehaviour
     private List<float> _platformChance = new();
     [SerializeField, Tooltip("Special platform propability"), Range(0.0f, 1.0f)]
     private float _specialPlatformChance;
+    [SerializeField, Tooltip("Specifies after how many platforms special should spawn;")]
+    private int _specialPlatformUnlock;
 
     private float _currentPropability;
     private float _currentSpecialPropability;
@@ -60,12 +62,15 @@ public class PlatformPropabilityCounter : MonoBehaviour
 
     public int CheckPropabilitySpecial()
     {
-        float randomFloat = ReturnCurrentChanceSpecial();
-
-        if(randomFloat >= (1 - _specialPlatformChance) && randomFloat <= 1)
+        if(_manager.OverallSpawnAmount > _specialPlatformUnlock)
         {
-            int randomPlatform = ReturnCurrentSpecialPlatform();
-            return randomPlatform;
+            float randomFloat = ReturnCurrentChanceSpecial();
+
+            if(randomFloat >= (1 - _specialPlatformChance) && randomFloat <= 1)
+            {
+                int randomPlatform = ReturnCurrentSpecialPlatform();
+                return randomPlatform;
+            }
         }
 
         return -1;
@@ -74,7 +79,7 @@ public class PlatformPropabilityCounter : MonoBehaviour
 
     float ReturnCurrentChanceSpecial()
     {
-        if(_manager.CurrentSpawnAmount == 0)
+        if(_manager.CurrentSpawnAmount == 0 && !_manager.isSpecialSection)
         {
             float randomFloat = Random.value;
             _currentSpecialPropability = randomFloat;
@@ -85,8 +90,13 @@ public class PlatformPropabilityCounter : MonoBehaviour
 
     int ReturnCurrentSpecialPlatform()
     {
-        int randomPlatform = Random.Range(0, 2);
-        _currentSpecialPlatform = randomPlatform;
+        if(!_manager.isSpecialSection)
+        {
+            int randomPlatform = Random.Range(0, 2);
+            _currentSpecialPlatform = randomPlatform;
+            return _currentSpecialPlatform;
+        }
+
         return _currentSpecialPlatform;
     }
 

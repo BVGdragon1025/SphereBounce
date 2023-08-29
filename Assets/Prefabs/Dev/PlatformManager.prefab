@@ -103,7 +103,8 @@ MonoBehaviour:
   - 0.2
   - 0.15
   - 0.3
-  _specialPlatformChance: 0
+  _specialPlatformChance: 0.4
+  _specialPlatformUnlock: 30
   _maxAmountToSpawn: 0
 --- !u!65 &1602837586
 BoxCollider:

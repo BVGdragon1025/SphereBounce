@@ -9,6 +9,7 @@ public class SphereController : MonoBehaviour
     private float _downForce;
     public bool isInAir;
     public bool touchedAntiGravity;
+    public bool touchedStickyPlatform;
 
     public static SphereController Instance { get; set; }
     [HideInInspector]
@@ -30,6 +31,7 @@ public class SphereController : MonoBehaviour
 
         _isDead = false;
         touchedAntiGravity = false;
+        touchedStickyPlatform = false;
         
     }
 

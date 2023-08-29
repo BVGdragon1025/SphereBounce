@@ -163,8 +163,10 @@ public class GameManager : MonoBehaviour
         SphereController.Instance.ResetPlayerPosition();
         SphereController.Instance.MarkAsDead(false);
         SphereController.Instance.touchedAntiGravity = false;
+        SphereController.Instance.touchedStickyPlatform = false;
         PlatformManager.Instance.CurrentSpawnAmount = _startAmountToSpawn;
         PlatformManager.Instance.isSpecialSection = false;
+        PlatformManager.Instance.SetOverallSpawnAmount = 0;
         isGravityReversed = false;
         Physics.gravity = new Vector3(0, -9.81f, 0);
         arePlatformsSticky = false;

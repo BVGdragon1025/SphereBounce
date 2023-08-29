@@ -4358,10 +4358,6 @@ PrefabInstance:
       propertyPath: _normalPlatformChance
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 34259149, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b, type: 3}
-      propertyPath: _specialPlatformChance
-      value: 0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 8113135284856351940, guid: 089b4a5bf83cdcf44b5487fdd1c2c62b,
         type: 3}
       propertyPath: m_Name

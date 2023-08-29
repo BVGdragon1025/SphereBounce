@@ -10,7 +10,7 @@ public class PlatformGravity : Platform
 
     private void OnEnable()
     {
-        _defaultGravityVector = Physics.gravity;
+        _defaultGravityVector = PlatformManager.Instance.DefaultGravity;
 
         if (!GameManager.Instance.isGravityReversed)
         {
@@ -33,9 +33,9 @@ public class PlatformGravity : Platform
         }
         else
         {
-            SphereController.Instance.touchedAntiGravity = false;
             StartCoroutine(RestoreGravity());
             playerRb.AddForce(Vector3.down * bounceForce, ForceMode.Impulse);
+            SphereController.Instance.touchedAntiGravity = false;
         }
 
         
