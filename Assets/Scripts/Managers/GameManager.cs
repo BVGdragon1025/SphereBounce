@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
         }
 
         PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
+        PlatformManager.Instance.isSpeedActive = false;
         SphereController.Instance.ResetPlayerPosition();
         SphereController.Instance.MarkAsDead(false);
         SphereController.Instance.touchedAntiGravity = false;

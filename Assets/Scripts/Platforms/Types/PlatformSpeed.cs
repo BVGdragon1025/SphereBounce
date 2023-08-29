@@ -11,7 +11,7 @@ public class PlatformSpeed : Platform
 
     public override void BounceSphere()
     {
-        if(speedPlatformActive)
+        if(PlatformManager.Instance.isSpeedActive)
             ResetPlatformSpeed();
         
         if (SphereController.Instance.touchedAntiGravity)
@@ -25,12 +25,14 @@ public class PlatformSpeed : Platform
 
     private IEnumerator ChangePlatformsSpeed()
     {
-        speedPlatformActive = true;
+        Debug.Log("Coroutine start: ChangePlatformsSpeed");
+        PlatformManager.Instance.isSpeedActive = true;
         PlatformManager.Instance.PlatformSpeed *= _speedMultiplier;
         yield return new WaitForSeconds(_speedTimer);
 
         PlatformManager.Instance.PlatformSpeed /= _speedMultiplier;
-        speedPlatformActive = false;
+        PlatformManager.Instance.isSpeedActive = false;
+        Debug.Log("Coroutine ended: ChangePlatformsSpeed");
         yield return new WaitForSeconds(_speedTimer + 0.2f);
 
         if(!SphereController.Instance.IsPlayerDead) 
@@ -40,6 +42,9 @@ public class PlatformSpeed : Platform
     private void ResetPlatformSpeed()
     {
         StopCoroutine(ChangePlatformsSpeed());
+        Debug.Log("Coroutine stoped!: ChangePlatformsSpeed");
         PlatformManager.Instance.PlatformSpeed /= _speedMultiplier;
+        PlatformManager.Instance.isSpeedActive = false;
+        
     }
 }

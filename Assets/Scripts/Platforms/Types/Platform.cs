@@ -10,9 +10,6 @@ public abstract class Platform : MonoBehaviour
     protected Rigidbody playerRb;
     protected Collider playerColl;
     protected float playerHitLocation;
-    protected bool speedPlatformActive;
-    [SerializeField]
-    protected bool shouldMove;
 
     private Vector3 _startingPosition;
 
@@ -21,7 +18,6 @@ public abstract class Platform : MonoBehaviour
         _startingPosition = transform.position;
         playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
-        speedPlatformActive = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,7 +45,7 @@ public abstract class Platform : MonoBehaviour
 
     private void Update()
     {
-        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted && shouldMove)
+        if (!SphereController.Instance.IsPlayerDead && GameManager.Instance.isGameStarted)
             transform.Translate(PlatformManager.Instance.PlatformSpeed * Time.deltaTime * Vector3.left);
     }
     public abstract void BounceSphere();

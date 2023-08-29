@@ -58,6 +58,7 @@ MonoBehaviour:
   - SpawnNext
   - GravityPlatform
   isSpecialSection: 0
+  isSpeedActive: 0
   _speedIncrease: 0.2
 --- !u!114 &7170432776881518671
 MonoBehaviour:
@@ -100,13 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _platformChance:
-  - 0.35
-  - 0.2
+  - 0.3
+  - 0.25
   - 0.15
   - 0.3
   _specialPlatformChance: 0.4
-  _specialPlatformUnlock: 30
-  _maxAmountToSpawn: 0
+  _specialPlatformUnlock: 15
 --- !u!65 &1602837586
 BoxCollider:
   m_ObjectHideFlags: 0

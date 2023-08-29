@@ -20,6 +20,8 @@ public class PlatformManager : MonoBehaviour
     private List<string> _platformTags;
 
     [Header("Platform modifiers")]
+    public bool isSpeedActive;
+    [HideInInspector]
     public bool isSpecialSection;
     private Vector3 _defaultGravity;
     public Vector3 DefaultGravity { get { return _defaultGravity; } }
@@ -54,6 +56,7 @@ public class PlatformManager : MonoBehaviour
         _propabilityCounter = GetComponent<PlatformPropabilityCounter>();
         _defaultGravity = Physics.gravity;
         isSpecialSection = false;
+        isSpeedActive = false;
 
     }
 
