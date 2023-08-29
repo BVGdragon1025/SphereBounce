@@ -9,7 +9,6 @@ public class SphereController : MonoBehaviour
     private float _downForce;
     public bool isInAir;
     public bool touchedAntiGravity;
-    public bool touchedStickyPlatform;
 
     public static SphereController Instance { get; set; }
     [HideInInspector]
@@ -31,7 +30,6 @@ public class SphereController : MonoBehaviour
 
         _isDead = false;
         touchedAntiGravity = false;
-        touchedStickyPlatform = false;
         
     }
 
@@ -60,8 +58,6 @@ public class SphereController : MonoBehaviour
                 else
                     sphereRb.AddForce(Vector3.down * _downForce, ForceMode.Impulse);
             }
-            
-
         }
     }
 

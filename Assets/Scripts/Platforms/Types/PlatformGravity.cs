@@ -38,7 +38,6 @@ public class PlatformGravity : Platform
             SphereController.Instance.touchedAntiGravity = false;
         }
 
-        
         GameManager.Instance.CurrentCombo += 1;
 
     }
@@ -65,13 +64,5 @@ public class PlatformGravity : Platform
             gameObject.SetActive(false);
         }
     }
-
-    private void ResetGravity()
-    {
-        StopCoroutine(ReverseGravity());
-        StopCoroutine(RestoreGravity());
-        Physics.gravity = _defaultGravityVector;
-    }
-
 
 }

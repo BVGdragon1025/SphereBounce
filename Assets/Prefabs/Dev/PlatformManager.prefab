@@ -58,6 +58,7 @@ MonoBehaviour:
   - SpawnNext
   - GravityPlatform
   isSpecialSection: 0
+  _speedIncrease: 0.2
 --- !u!114 &7170432776881518671
 MonoBehaviour:
   m_ObjectHideFlags: 0

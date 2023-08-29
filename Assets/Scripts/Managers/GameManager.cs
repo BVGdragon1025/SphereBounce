@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
     [Header("Variables")]
     public bool isGameStarted = false;
     public bool isGravityReversed = false;
-    public bool arePlatformsSticky = false;
     [SerializeField]
     private int _startAmountToSpawn;
     public int StartAmountToSpawn { get { return _startAmountToSpawn; } }
@@ -160,16 +159,15 @@ public class GameManager : MonoBehaviour
                 _notPooled[i].SetActive(true);
         }
 
+        PlatformManager.Instance.PlatformSpeed = PlatformManager.Instance.DefaultSpeed;
         SphereController.Instance.ResetPlayerPosition();
         SphereController.Instance.MarkAsDead(false);
         SphereController.Instance.touchedAntiGravity = false;
-        SphereController.Instance.touchedStickyPlatform = false;
         PlatformManager.Instance.CurrentSpawnAmount = _startAmountToSpawn;
         PlatformManager.Instance.isSpecialSection = false;
         PlatformManager.Instance.SetOverallSpawnAmount = 0;
         isGravityReversed = false;
         Physics.gravity = new Vector3(0, -9.81f, 0);
-        arePlatformsSticky = false;
 
         isGameStarted = true;
        

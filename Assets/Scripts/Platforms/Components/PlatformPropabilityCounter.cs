@@ -15,12 +15,12 @@ public class PlatformPropabilityCounter : MonoBehaviour
     private float _currentSpecialPropability;
     private int _currentSpecialPlatform;
     private PlatformManager _manager;
+    private PlatformPoolsComponent _poolsComponent;
+
     //Number of platforms in one section
     [SerializeField]
     private int _maxAmountToSpawn;
     public int MaxAmountToSpawn { get { return _maxAmountToSpawn; } set { _maxAmountToSpawn = value; } }
-    private PlatformPoolsComponent _poolsComponent;
-
 
     private void Start()
     {

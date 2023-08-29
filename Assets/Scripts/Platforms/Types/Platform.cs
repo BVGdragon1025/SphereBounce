@@ -10,6 +10,7 @@ public abstract class Platform : MonoBehaviour
     protected Rigidbody playerRb;
     protected Collider playerColl;
     protected float playerHitLocation;
+    protected bool speedPlatformActive;
     [SerializeField]
     protected bool shouldMove;
 
@@ -20,6 +21,7 @@ public abstract class Platform : MonoBehaviour
         _startingPosition = transform.position;
         playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
+        speedPlatformActive = false;
     }
 
     private void OnCollisionEnter(Collision collision)

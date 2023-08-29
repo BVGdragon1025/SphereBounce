@@ -171,7 +171,6 @@ MonoBehaviour:
   - {fileID: 517262059}
   isGameStarted: 0
   isGravityReversed: 0
-  arePlatformsSticky: 0
   _startAmountToSpawn: 0
 --- !u!4 &14127799
 Transform:

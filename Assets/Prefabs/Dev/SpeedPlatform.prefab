@@ -213,5 +213,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounceForce: 5.5
   shouldMove: 1
-  _speedMultiplier: 3.1
+  _speedMultiplier: 2
   _speedTimer: 0.7

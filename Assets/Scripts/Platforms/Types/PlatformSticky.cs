@@ -7,6 +7,7 @@ public class PlatformSticky : Platform
 
     public override void BounceSphere()
     {
+        /*
         if (!SphereController.Instance.touchedStickyPlatform)
         {
             SphereController.Instance.touchedStickyPlatform = true;
@@ -17,11 +18,12 @@ public class PlatformSticky : Platform
             playerRb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
             SphereController.Instance.touchedStickyPlatform = false; 
         }
+        */
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && SphereController.Instance.touchedStickyPlatform)
+        if (collision.gameObject.CompareTag("Player"))
         {
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
             {

@@ -15,6 +15,7 @@ public class PlatformManager : MonoBehaviour
     private float _spaceBetweenPlatforms;
     [SerializeField]
     private float _platformSpeed;
+    private float _platformSpeedMod;
     [SerializeField]
     private List<string> _platformTags;
 
@@ -22,9 +23,11 @@ public class PlatformManager : MonoBehaviour
     public bool isSpecialSection;
     private Vector3 _defaultGravity;
     public Vector3 DefaultGravity { get { return _defaultGravity; } }
+    [SerializeField]
+    private float _speedIncrease;
 
     public float PlatformSpeed { get { return _platformSpeed; } set { _platformSpeed = value; } }
-    public float GetSpaceBetweenPlatforms { get { return _spaceBetweenPlatforms; }}
+    public float PlatformSpeedMod { get { return _platformSpeedMod; } }
     public int CurrentSpawnAmount { get { return _currentSpawnAmount; } set { _currentSpawnAmount = value; } }
     public int OverallSpawnAmount { get { return _allSpawnedAmount; } }
     public int SetOverallSpawnAmount { set {  _allSpawnedAmount = value; } }
@@ -35,7 +38,6 @@ public class PlatformManager : MonoBehaviour
     private PlatformPropabilityCounter _propabilityCounter;
     private float _defaultSpeed;
     public float DefaultSpeed { get { return _defaultSpeed;} }
-    public float CurrentPlatformSpeed { get { return _platformSpeed; } }
 
     private void Awake()
     {
@@ -78,10 +80,6 @@ public class PlatformManager : MonoBehaviour
                     if (specialPlatform != null && (!isSpecialSection || (isSpecialSection && _currentSpawnAmount == (_propabilityCounter.MaxAmountToSpawn - 1))))
                     {
                         Debug.Log("Special platform is spawned!");
-                        /*
-                        if (_propabilityCounter.MaxAmountToSpawn < 4)
-                            _propabilityCounter.MaxAmountToSpawn = 4;
-                        */
                         SpawnPlatform(specialPlatform, other.gameObject);
                         isSpecialSection = true;
                     }
@@ -91,6 +89,8 @@ public class PlatformManager : MonoBehaviour
                     }
                     _currentSpawnAmount++;
                     _allSpawnedAmount++;
+
+                    IncreasePlatformSpeed(20, _speedIncrease);
 
                 }
             }
@@ -138,6 +138,16 @@ public class PlatformManager : MonoBehaviour
         platform.SetActive(true);
 
         Debug.Log($"{otherObjectPos}");
+    }
+
+    private void IncreasePlatformSpeed(int platformCount, float modifier)
+    {
+        _platformSpeedMod = _platformSpeed;
+        if (_allSpawnedAmount % platformCount == 0)
+        {
+            _platformSpeed += modifier;
+            _platformSpeedMod = _platformSpeed;
+        }
     }
 
     private void SetSpawnPosition(GameObject platform, Vector3 spawnPosition)
